@@ -75,3 +75,11 @@ ul {
 .icon-label-container mat-icon {
   margin-right: 8px; /* Adjust margin between icon and text */
 }
+::ng-deep .mat-tree {
+  background-color: transparent;
+}
+::ng-deep mat-tree-node {
+  color: #98a6ad !important;
+}
+
+

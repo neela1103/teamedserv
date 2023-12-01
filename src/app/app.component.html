@@ -7,14 +7,21 @@
     <mat-nav-list>
       <span class="pl-2">NAVIGATION</span>
       <ul>
-        <li *ngFor="let navItem of getNavItems()">
-          <a class="links" mat-list-item href="#">
-            <div class="icon-label-container">
-              <mat-icon>{{navItem.icon}}</mat-icon>
-              <span>{{ navItem.label }}</span>
-            </div>
-          </a>
-        </li>
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            {{node.label}}
+          </mat-tree-node>
+
+          <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.label">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            {{node.label}}
+          </mat-tree-node>
+        </mat-tree>
       </ul>
     </mat-nav-list>
   </mat-sidenav>
