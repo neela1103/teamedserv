@@ -49,6 +49,7 @@ mat-card-content {
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent !important;
 }
+
 .mat-mdc-raised-button[disabled][disabled] {
   background-color: #3c8dbc;
   opacity: 0.8;
@@ -62,5 +63,18 @@ mat-card-content {
 
 .login-text {
   padding-bottom: 10px;
+  font-size: 15px;
+}
+
+.forgot-text {
+  font-weight: 500;
   font-size: 14px;
+  color: #434648;
+  display: flex;
+  align-items: flex-start;
+  text-decoration: none;
+
+  mat-icon{
+    font-size: 16px;
+  }
 }

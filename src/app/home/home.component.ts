@@ -8,6 +8,7 @@ import {
 import { DashboardCardsConstant } from '../common/constants/DashboardCardsConstant';
 import { UserRoleConstant } from '../common/constants/UserRolesConstant';
 import { Observable } from 'rxjs';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
   public cards: Card[] | undefined;
   public cardsSet2: Card[] | undefined;
   columns: Boolean = true;
+  public userData: any;
 
   observeResolution(): Observable<boolean> {
     return this.breakpointObserver
@@ -34,12 +36,16 @@ export class HomeComponent implements OnInit {
         })
       );
   }
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
     this.observeResolution().subscribe((columns) => {
       this.columns = columns;
     });
   }
   ngOnInit() {
+    this.authService.userData$.subscribe(userData => {
+      this.userData = userData;
+      console.log(userData)
+    });
     let allCards = DashboardCardsConstant.find(
       (card) => card.role === UserRoleConstant.ADMIN
     )?.cards;

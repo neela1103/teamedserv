@@ -1,34 +1,54 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserAuthModel } from 'src/app/common/models/UserAuthModel';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private isLoggedIn: boolean = true; // Simulating user authentication status
+  private isLoggedIn: boolean = false; // Simulating user authentication status
+  private userDataSubject = new BehaviorSubject<any>(null);
+  public userData$: Observable<any> = this.userDataSubject.asObservable();
 
-  constructor() {}
+  constructor() {
+    const userData = this.getUserData();
+    if (userData) {
+      this.userDataSubject.next(userData);
+    }
+  }
 
   // Simulated login
   login(userData: UserAuthModel): boolean {
-    // Perform authentication logic, e.g., check credentials against a database
-    // For demonstration purposes, using dummy credentials
-    console.log(userData);
     if (userData.email === 'admin' && userData.password === 'admin') {
       this.isLoggedIn = true;
+      this.storeUserData({
+        first_name: 'Deepak',
+        last_name: 'Mane',
+        id: 1,
+        user_type: 1,
+      });
       return true;
     }
     return false;
   }
 
-  // Simulated logout
-  logout(): void {
-    // Clear user authentication status
-    this.isLoggedIn = false;
+  storeUserData(userData: any) {
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+    this.userDataSubject.next(userData);
   }
 
-  // Check if the user is authenticated
+  getUserData(): any {
+    return JSON.parse(sessionStorage.getItem('userData') || '{}');
+  }
+
+  // Simulated logout
+  logout(): void {
+    sessionStorage.clear();
+    console.log(sessionStorage.getItem('userData'));
+  }
+
   isAuthenticated(): boolean {
-    return this.isLoggedIn;
+    const userData = this.getUserData();
+    return !!userData && Object.keys(userData).length !== 0; // Assuming userData exists if the user is logged in
   }
 }

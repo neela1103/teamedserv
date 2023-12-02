@@ -18,7 +18,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
               <mat-label>Enter your password</mat-label>
               <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
@@ -29,7 +29,10 @@
                 Password is required
               </mat-error>
             </mat-form-field>
-
+            <a class="forgot-text" href="#">
+              <mat-icon>lock</mat-icon>
+              <span>Forgot your Password?</span>
+            </a>
             <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="login-button">
               Login
             </button>

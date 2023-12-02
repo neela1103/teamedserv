@@ -1,5 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@mdi/font/css/materialdesignicons.min.css';
 
+/* styles.css or custom CSS file */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+       url('./assets/fonts/static/OpenSans-Regular.ttf') format('ttf'), /* Adjust font file path */
+       url('./assets/fonts/static/OpenSans-SemiBold.ttf') format('ttf');
+}
+
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0;  }
