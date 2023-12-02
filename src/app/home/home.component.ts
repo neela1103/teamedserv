@@ -1,33 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import {
+  Card,
+  DashboardCardsModel,
+} from '../common/models/DashboardCardsModel';
+import { DashboardCardsConstant } from '../common/constants/DashboardCardsConstant';
+import { UserRoleConstant } from '../common/constants/UserRolesConstant';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
-        ];
-      }
 
-      return [
-        { title: 'Card 1', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 2 },
-        { title: 'Card 4', cols: 1, rows: 1 }
-      ];
-    })
-  );
+  public cards: Card[] | undefined;
+  public cardsSet2: Card[] | undefined;
+  columns: Boolean = true;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  observeResolution(): Observable<boolean> {
+    return this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large])
+      .pipe(
+        map((result) => {
+          if (result.breakpoints[Breakpoints.Large]) {
+            return true; // Large screen: 4 columns
+          } else {
+            return false; // Small or Medium screen: 2 columns
+          }
+        })
+      );
+  }
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.observeResolution().subscribe((columns) => {
+      this.columns = columns;
+    });
+  }
+  ngOnInit() {
+    let allCards = DashboardCardsConstant.find(
+      (card) => card.role === UserRoleConstant.ADMIN
+    )?.cards;
+    this.cards = allCards?.setOne;
+    this.cardsSet2 = allCards?.setTwo;
+  }
 }

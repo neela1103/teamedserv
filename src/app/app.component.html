@@ -1,44 +1,66 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>
-      <img src="https://app.teamedserv.com/assets/admin/images/logo.png" height="42px">
-    </mat-toolbar>
-    <mat-nav-list>
-      <span class="pl-2">NAVIGATION</span>
-      <ul>
+<ng-container *ngIf="authService.isAuthenticated(); else unauthorized">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <mat-toolbar>
+        <img src="https://app.teamedserv.com/assets/admin/images/logo.png" height="42px">
+      </mat-toolbar>
+      <mat-nav-list>
+        <span class="pl-2">NAVIGATION</span>
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="toggleNode(node)">
             <button mat-icon-button disabled></button>
-            {{node.label}}
+            <div class="icon-label-container">
+              <mat-icon>{{node.icon}}</mat-icon>
+              <span>{{ node.label }}</span>
+            </div>
           </mat-tree-node>
 
-          <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.label">
+          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+            (click)="toggleNode(node)">
+            <div class="icon-label-container">
+              <mat-icon>{{node.icon}}</mat-icon>
+              <span>{{ node.label }}</span>
+            </div>
+            <button mat-icon-button [attr.aria-label]="'Toggle ' + node.label">
               <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
               </mat-icon>
             </button>
-            {{node.label}}
+
           </mat-tree-node>
         </mat-tree>
-      </ul>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <!-- <div style="display: flex; justify-content: space-between;"> -->
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>teamedserv-app</span>
-      <a href="#" class="dropdown-toggle waves-effect user-link" data-toggle="dropdown" aria-expanded="true">
-        <img src="https://app.teamedserv.com/assets/admin/images/users/avatar-1.jpg" alt="user-img"
-          class="img-circle user-img">
-      </a>
-      <!-- </div> -->
-    </mat-toolbar>
-    <app-home></app-home>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>teamedserv-app</span>
+        <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
+          <a class="profile-icon"> <img src="https://app.teamedserv.com/assets/admin/images/users/avatar-1.jpg"
+              alt="user-img" class="img-circle user-img"></a>
+          <mat-menu #menu="matMenu" class="custom-menu">
+            <span class="profile-text">Hello Deepak!</span>
+            <button mat-menu-item>
+              <mat-icon>account_circle</mat-icon>
+              <span>Accounts</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </div>
+      </mat-toolbar>
 
-  </mat-sidenav-content>
-</mat-sidenav-container>
+      <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+
+<ng-template #unauthorized>
+  <app-auth></app-auth>
+</ng-template>

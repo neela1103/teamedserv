@@ -1,0 +1,66 @@
+main {
+  background-color: aliceblue;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Adjust the height as needed */
+}
+
+.center-card {
+  width: 440px;
+  bottom: 8%;
+  border-radius: 10px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  /* Adjust the maximum width as needed */
+  margin: auto;
+}
+
+.login-button {
+  width: 100%;
+  margin-top: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-mdc-card-header {
+  justify-content: center;
+  background-color: #296385;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+mat-card-content {
+  padding: 40px 0;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}
+.mat-mdc-raised-button[disabled][disabled] {
+  background-color: #3c8dbc;
+  opacity: 0.8;
+  color: #fff;
+}
+
+.mat-mdc-raised-button {
+  background-color: #3c8dbc !important;
+  color: #fff;
+}
+
+.login-text {
+  padding-bottom: 10px;
+  font-size: 14px;
+}

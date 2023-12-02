@@ -1,0 +1,44 @@
+<main>
+  <div class="container">
+    <div class="container">
+      <mat-card class="center-card">
+        <mat-card-header>
+          <mat-card-title>
+            <img src="https://app.teamedserv.com/assets/admin/images/logo.png" height="36" />
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+            <span class="login-text">Login Here</span>
+            <mat-form-field appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput type="text" formControlName="email" class="custom-input">
+              <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                Email is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field >
+              <mat-label>Enter your password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                Password is required
+              </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="login-button">
+              Login
+            </button>
+          </form>
+
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+</main>

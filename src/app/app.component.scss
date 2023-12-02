@@ -7,7 +7,7 @@ mat-sidenav {
 }
 
 .sidenav {
-  width: 240px;
+  width: 260px;
 }
 
 .sidenav .mat-toolbar {
@@ -21,7 +21,7 @@ mat-sidenav {
 ul {
   list-style-type: none;
   font-size: 15px;
-  padding-inline-start: 15px;
+  padding-inline-start: 0px;
 }
 
 ::ng-deep .mdc-list-item__primary-text {
@@ -54,15 +54,23 @@ ul {
   margin: 0 auto;
 }
 
+.profile-icon {
+  cursor: pointer;
+}
+
 .img-circle {
   border-radius: 50%;
   height: 40px;
+  width: 40px;
+  align-items: center;
+  display: flex;
 }
 
 .links {
   display: flex;
   gap: 4px;
 }
+
 .icon-label-container {
   display: flex;
   align-items: center;
@@ -73,13 +81,81 @@ ul {
 }
 
 .icon-label-container mat-icon {
-  margin-right: 8px; /* Adjust margin between icon and text */
+  margin-right: 8px;
+  /* Adjust margin between icon and text */
 }
+
 ::ng-deep .mat-tree {
   background-color: transparent;
 }
+
 ::ng-deep mat-tree-node {
   color: #98a6ad !important;
+  padding-left: 0px !important;
 }
 
 
+.mat-tree-node {
+  display: flex;
+  align-items: center;
+}
+
+.node-content {
+  flex: 1;
+}
+
+/* Moves the toggle button to the right */
+button.mat-icon-button.mat-tree-node-toggler {
+  order: 2;
+  /* Moves the button to the right */
+  margin-left: 8px;
+  /* Adjust the spacing between the text and button */
+}
+
+mat-tree-node {
+  cursor: pointer;
+}
+
+.mat-tree-node__toggle {
+  order: 3;
+  /* Moves the icon to the right */
+  margin-left: 8px;
+  /* Adjust the spacing between the button and icon */
+}
+
+.mat-icon-rtl-mirror {}
+
+.mat-tree-sub-node {
+  padding-left: 45px !important;
+  display: flex;
+
+  button {
+    position: absolute;
+    right: 0;
+  }
+
+  // justify-content: space-between;
+}
+
+.mat-tree-node,
+.mat-nested-tree-node {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.mat-drawer[style*="visibility: hidden"] {
+  width: 20px !important;
+  display: block;
+}
+
+.profile-text {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: #d0d9de;
+}
+
+::ng-deep .cdk-overlay-container .mat-mdc-menu-content {
+  padding: 0px !important;
+  width: 170px;
+}
