@@ -1,4 +1,4 @@
-<ng-container *ngIf="authService.isAuthenticated(); else unauthorized">
+<ng-container *ngIf="checkIsValid(); else unauthorized">
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
@@ -7,8 +7,8 @@
       </mat-toolbar>
       <mat-nav-list>
         <span class="pl-2">NAVIGATION</span>
-        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="toggleNode(node)">
+        <mat-tree [dataSource]="authService.dataSource" [treeControl]="authService.treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)">
             <button mat-icon-button disabled></button>
             <div class="icon-label-container">
               <mat-icon>{{node.icon}}</mat-icon>
@@ -16,15 +16,15 @@
             </div>
           </mat-tree-node>
 
-          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
-            (click)="toggleNode(node)">
+          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: authService.hasChild" matTreeNodePadding
+            (click)="authService.toggleNode(node)">
             <div class="icon-label-container">
               <mat-icon>{{node.icon}}</mat-icon>
               <span>{{ node.label }}</span>
             </div>
             <button mat-icon-button [attr.aria-label]="'Toggle ' + node.label">
               <mat-icon class="mat-icon-rtl-mirror">
-                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                {{authService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
               </mat-icon>
             </button>
 
@@ -54,8 +54,11 @@
           </mat-menu>
         </div>
       </mat-toolbar>
+      <div class="spinner-container" *ngIf="showSpinner">
+        <mat-spinner  diameter="50"></mat-spinner>
+      </div>
 
-      <router-outlet></router-outlet>
+      <router-outlet *ngIf="!showSpinner"></router-outlet>
 
     </mat-sidenav-content>
   </mat-sidenav-container>

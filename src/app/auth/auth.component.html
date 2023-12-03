@@ -33,8 +33,10 @@
               <mat-icon>lock</mat-icon>
               <span>Forgot your Password?</span>
             </a>
-            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="login-button">
-              Login
+            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoggingIn" class="login-button">
+              <span *ngIf="isLoggingIn" class="spinner-border spinner-border-sm" role="status"
+                aria-hidden="true"></span>
+              <span *ngIf="!isLoggingIn">Login</span>
             </button>
           </form>
 

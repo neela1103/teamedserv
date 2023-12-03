@@ -1,35 +1,97 @@
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {
+  MatTreeFlatDataSource,
+  MatTreeFlattener,
+} from '@angular/material/tree';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { NavItemsContant } from 'src/app/common/constants/NavItemsConstant';
+import { UserRoleConstant } from 'src/app/common/constants/UserRolesConstant';
+import { NavLinksModel } from 'src/app/common/models/NavLinksModel';
 import { UserAuthModel } from 'src/app/common/models/UserAuthModel';
 
+interface ExampleFlatNode {
+  expandable: boolean;
+  label: string;
+  level: number;
+  icon: string;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private isLoggedIn: boolean = false; // Simulating user authentication status
+  private _transformer = (node: NavLinksModel, level: number) => {
+    return {
+      expandable: !!node.subItems && node.subItems.length > 0,
+      label: node.label,
+      level: level,
+      icon: node.icon,
+    };
+  };
+  navItems: NavLinksModel[] = NavItemsContant;
+  userRole: UserRoleConstant = UserRoleConstant.ADMIN;
+
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    (node) => node.level,
+    (node) => node.expandable
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    (node) => node.level,
+    (node) => node.expandable,
+    (node) => node.subItems
+  );
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  currentlyExpandedNode: ExampleFlatNode | null = null;
+
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  public isLoggedIn: boolean = false; // Simulating user authentication status
   private userDataSubject = new BehaviorSubject<any>(null);
   public userData$: Observable<any> = this.userDataSubject.asObservable();
-
-  constructor() {
+  public userProfile: any;
+  private baseUrl = 'https://app.teamedserv.com/api';
+  constructor(private router: Router, private http: HttpClient) {
     const userData = this.getUserData();
     if (userData) {
       this.userDataSubject.next(userData);
     }
   }
 
-  // Simulated login
-  login(userData: UserAuthModel): boolean {
-    if (userData.email === 'admin' && userData.password === 'admin') {
-      this.isLoggedIn = true;
-      this.storeUserData({
-        first_name: 'Deepak',
-        last_name: 'Mane',
-        id: 1,
-        user_type: 1,
-      });
-      return true;
+  toggleNode(node: ExampleFlatNode): void {
+    if (
+      this.currentlyExpandedNode &&
+      this.treeControl.isExpanded(this.currentlyExpandedNode)
+    ) {
+      this.treeControl.collapse(this.currentlyExpandedNode);
+      if (this.currentlyExpandedNode.label === node.label) {
+        this.currentlyExpandedNode = null;
+        return;
+      }
     }
-    return false;
+    // if(!this.currentlyExpandedNode) {
+    this.treeControl.toggle(node);
+    this.currentlyExpandedNode = this.treeControl.isExpanded(node)
+      ? node
+      : null;
+    // }
+    // else if( this.currentlyExpandedNode.label !== node.label ){
+    //   this.treeControl.toggle(node);
+    //   this.currentlyExpandedNode = this.treeControl.isExpanded(node) ? node : null;
+    // }
+  }
+
+  login(userData: UserAuthModel): Observable<any> {
+    const loginUrl = `${this.baseUrl}/login`; // Your login endpoint
+    let fd = new FormData();
+    fd.append('username', userData.email);
+    fd.append('password', userData.password);
+
+    return this.http.post<any>(loginUrl, fd);
   }
 
   storeUserData(userData: any) {
@@ -41,14 +103,20 @@ export class AuthService {
     return JSON.parse(sessionStorage.getItem('userData') || '{}');
   }
 
-  // Simulated logout
   logout(): void {
+    this.isLoggedIn = false;
     sessionStorage.clear();
     console.log(sessionStorage.getItem('userData'));
+    this.router.navigate(['/auth']);
   }
 
   isAuthenticated(): boolean {
-    const userData = this.getUserData();
-    return !!userData && Object.keys(userData).length !== 0; // Assuming userData exists if the user is logged in
+    this.userProfile = this.getUserData();
+    this.dataSource.data = NavItemsContant.filter((navItems) =>
+      navItems.roles.includes(this.userProfile.user_type)
+    );
+    if (this.userProfile) this.isLoggedIn = true;
+    else this.isLoggedIn = false;
+    return !!this.userProfile && Object.keys(this.userProfile).length !== 0; // Assuming userData exists if the user is logged in
   }
 }

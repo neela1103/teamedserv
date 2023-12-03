@@ -12,6 +12,7 @@ import { AuthService } from '../shared/services/auth.service';
 export class AuthComponent implements OnInit {
   loginForm!: FormGroup;
   hide = true;
+  isLoggingIn = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -26,11 +27,22 @@ export class AuthComponent implements OnInit {
   }
   login() {
     if (this.loginForm.valid) {
+      this.isLoggingIn = true; // Show the spinner
       const formModel: UserAuthModel = this.loginForm.value as UserAuthModel;
-      // Logic to handle login
-      console.log(this._authService.login(formModel))
-      if (this._authService.login(formModel))
-        this.router.navigate(['/']);
+      this._authService.login(formModel).subscribe(
+        (response) => {
+          if (response.status) {
+            this._authService.storeUserData(response.data);
+            this.router.navigate(['/']);
+          } else {
+            console.error('Login failed', response.message);
+          }
+        },
+        (error) => {
+          console.error('Login failed', error);
+        }
+      );
+      this.isLoggingIn = false;
     }
   }
 }

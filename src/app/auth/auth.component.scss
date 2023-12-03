@@ -78,3 +78,21 @@ mat-card-content {
     font-size: 16px;
   }
 }
+
+.spinner-border {
+  display: inline-block;
+  width: 1.25rem; /* Adjust size as needed */
+  height: 1.25rem; /* Adjust size as needed */
+  vertical-align: text-bottom;
+  border: 3px solid rgba(0, 0, 0, 0.1); /* Spinner border color */
+  border-radius: 50%;
+  border-top-color: #fff; /* Spinner color */
+  animation: spinner-border 0.75s linear infinite;
+}
+
+/* Animation for the spinner */
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
