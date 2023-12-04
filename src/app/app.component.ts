@@ -19,7 +19,7 @@ import {
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { AuthService } from './shared/services/auth.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -44,9 +44,10 @@ import { AuthService } from './shared/services/auth.service';
   ],
 })
 export class AppComponent implements OnInit {
-
   public title = 'teamedserv-app';
-  public showSpinner=false;
+  public showSpinner = false;
+  public userProfile: any;
+
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -54,21 +55,33 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) {}
 
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public handleLogOut() {
     this.authService.logout();
   }
-  public checkIsValid(){
-    let userProfile = this.authService.getUserData();
-    return !!userProfile && Object.keys(userProfile).length !== 0; // Assuming userData exists if the user is logged in
+  public checkIsValid() {
+    this.userProfile = this.authService.getUserData();
+    return !!this.userProfile && Object.keys(this.userProfile).length !== 0; // Assuming userData exists if the user is logged in
+  }
+  public canAccessCompany() {
+    if (!this.userProfile) this.userProfile = this.authService.getUserData();
+    return (
+      this.userProfile.user_type === UserRoleConstant.ADMIN ||
+      this.userProfile.user_type === UserRoleConstant.CUSTOMER
+    );
+  }
+  public canAccessAccount() {
+    if (!this.userProfile) this.userProfile = this.authService.getUserData();
+    return this.userProfile.user_type === UserRoleConstant.PROFESSIONAL;
+  }
+  public onNodeClicked(node: NavLinksModel) {
+    this.router.navigate([node.url]);
   }
 }

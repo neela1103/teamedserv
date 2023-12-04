@@ -5,11 +5,13 @@ export class NavLinksModel {
   public roles: UserRoleConstant[];
   public subItems: NavLinksModel[];
   public icon: string;
+  public url: string;
 
   constructor() {
     this.label = '';
     this.roles = [];
     this.subItems = [];
     this.icon = '';
+    this.url = '';
   }
 }

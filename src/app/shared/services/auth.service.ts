@@ -9,15 +9,10 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NavItemsContant } from 'src/app/common/constants/NavItemsConstant';
 import { UserRoleConstant } from 'src/app/common/constants/UserRolesConstant';
+import { NavItemNode } from 'src/app/common/models/NavItemNodeModel';
 import { NavLinksModel } from 'src/app/common/models/NavLinksModel';
 import { UserAuthModel } from 'src/app/common/models/UserAuthModel';
 
-interface ExampleFlatNode {
-  expandable: boolean;
-  label: string;
-  level: number;
-  icon: string;
-}
 @Injectable({
   providedIn: 'root',
 })
@@ -28,12 +23,13 @@ export class AuthService {
       label: node.label,
       level: level,
       icon: node.icon,
+      url: node.url,
     };
   };
   navItems: NavLinksModel[] = NavItemsContant;
   userRole: UserRoleConstant = UserRoleConstant.ADMIN;
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
+  treeControl = new FlatTreeControl<NavItemNode>(
     (node) => node.level,
     (node) => node.expandable
   );
@@ -46,9 +42,9 @@ export class AuthService {
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-  currentlyExpandedNode: ExampleFlatNode | null = null;
+  currentlyExpandedNode: NavItemNode | null = null;
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: NavItemNode) => node.expandable;
 
   public isLoggedIn: boolean = false; // Simulating user authentication status
   private userDataSubject = new BehaviorSubject<any>(null);
@@ -62,7 +58,7 @@ export class AuthService {
     }
   }
 
-  toggleNode(node: ExampleFlatNode): void {
+  toggleNode(node: NavItemNode): void {
     if (
       this.currentlyExpandedNode &&
       this.treeControl.isExpanded(this.currentlyExpandedNode)

@@ -25,7 +25,9 @@ ul {
 }
 
 ::ng-deep .mdc-list-item__primary-text {
-  color: #98a6ad !important;
+  // color: #98a6ad !important;
+  color: #4e3d3d;
+  font-family: 'OpenSans-SemiBold';
   font-size: 14px !important;
 }
 
@@ -75,9 +77,9 @@ ul {
   display: flex;
   align-items: center;
 
-  mat-icon {
-    font-size: 20px;
-  }
+}
+mat-icon {
+  font-size: 20px;
 }
 
 .icon-label-container mat-icon {
@@ -153,11 +155,15 @@ mat-tree-node {
   text-align: center;
   padding: 10px;
   background-color: #d0d9de;
+
+}
+.mat-mdc-menu-item .mat-icon {
+  color: #686b6d !important
 }
 
 ::ng-deep .cdk-overlay-container .mat-mdc-menu-content {
   padding: 0px !important;
-  width: 170px;
+  width: 220px;
 }
 .spinner-container {
   position: fixed;

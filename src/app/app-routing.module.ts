@@ -18,6 +18,11 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'customer',
+    loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule),
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({

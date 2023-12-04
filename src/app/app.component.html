@@ -8,7 +8,7 @@
       <mat-nav-list>
         <span class="pl-2">NAVIGATION</span>
         <mat-tree [dataSource]="authService.dataSource" [treeControl]="authService.treeControl">
-          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)" (click)="onNodeClicked(node)">
             <button mat-icon-button disabled></button>
             <div class="icon-label-container">
               <mat-icon>{{node.icon}}</mat-icon>
@@ -16,8 +16,8 @@
             </div>
           </mat-tree-node>
 
-          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: authService.hasChild" matTreeNodePadding
-            (click)="authService.toggleNode(node)">
+          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: authService.hasChild"
+            matTreeNodePadding (click)="authService.toggleNode(node)">
             <div class="icon-label-container">
               <mat-icon>{{node.icon}}</mat-icon>
               <span>{{ node.label }}</span>
@@ -44,6 +44,19 @@
           <mat-menu #menu="matMenu" class="custom-menu">
             <span class="profile-text">Hello Deepak!</span>
             <button mat-menu-item>
+              <mat-icon>lock</mat-icon>
+              <span>Reset Password</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>image</mat-icon>
+              <span>Upload Profile Picture</span>
+            </button>
+            <!-- dynamic option  -->
+            <button mat-menu-item *ngIf="canAccessCompany()">
+              <mat-icon>person</mat-icon>
+              <span>Company</span>
+            </button>
+            <button mat-menu-item *ngIf="canAccessAccount()">
               <mat-icon>account_circle</mat-icon>
               <span>Accounts</span>
             </button>
@@ -54,11 +67,11 @@
           </mat-menu>
         </div>
       </mat-toolbar>
-      <div class="spinner-container" *ngIf="showSpinner">
+      <!-- <div class="spinner-container" *ngIf="showSpinner">
         <mat-spinner  diameter="50"></mat-spinner>
-      </div>
+      </div> -->
 
-      <router-outlet *ngIf="!showSpinner"></router-outlet>
+      <router-outlet></router-outlet>
 
     </mat-sidenav-content>
   </mat-sidenav-container>

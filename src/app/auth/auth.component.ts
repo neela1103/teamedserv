@@ -37,12 +37,13 @@ export class AuthComponent implements OnInit {
           } else {
             console.error('Login failed', response.message);
           }
+          this.isLoggingIn = false;
         },
         (error) => {
+          this.isLoggingIn = false;
           console.error('Login failed', error);
         }
       );
-      this.isLoggingIn = false;
     }
   }
 }
