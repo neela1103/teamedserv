@@ -20,8 +20,10 @@ export class AddCustomerComponent implements OnInit {
   public isChecking: Boolean = false;
   public timezones: any;
   public addressPredictions: any;
+  public customerData!: CustomerModel;
 
   companyForm = this.fb.group({
+    customer_id: 0,
     username: [
       '',
       [
@@ -89,6 +91,30 @@ export class AddCustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTimeZones();
+    this.customerData = history.state.customerData;
+    console.log(this.customerData);
+    this.companyForm.patchValue({
+      customer_id: this.customerData.customer_id,
+      username: this.customerData.username,
+      password: this.customerData.password,
+      company_name: this.customerData.company_name,
+      physical_address: this.customerData.physical_address,
+      mailing_address: this.customerData.mailing_address,
+      fax: this.customerData.fax,
+      timezone: this.customerData.timezone,
+      federal_no: this.customerData.federal_no,
+      company_email: this.customerData.company_email,
+      phone: this.customerData.phone,
+      contact_name: this.customerData.contact_name,
+      position: this.customerData.position,
+      contact_phone: this.customerData.contact_phone,
+      contact_email: this.customerData.contact_email,
+      credit_limit: this.customerData.credit_limit,
+      payment_method: this.customerData.payment_method,
+      payment_days: this.customerData.payment_days,
+      payment_terms: this.customerData.payment_terms,
+      notes: this.customerData.notes,
+    });
   }
 
   onSubmit(): void {
@@ -103,20 +129,29 @@ export class AddCustomerComponent implements OnInit {
         formData.append(key, value);
       }
       this.showSpinner = true;
-      this._apiService.post(APIConstant.ADD_CUSTOMER, formData).subscribe(
-        (res) => {
-          if (res) {
+      this._apiService
+        .post(
+          this.customerData
+            ? APIConstant.EDIT_CUSTOMER
+            : APIConstant.ADD_CUSTOMER,
+          formData
+        )
+        .subscribe(
+          (res) => {
+            if (res) {
+              this.showSpinner = false;
+              this.router.navigate(['/customer']);
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
             this.showSpinner = false;
-            this.router.navigate(['/customer']);
-          } else {
-            this.showSpinner = false;
+            console.error('Operation failed', error);
           }
-        },
-        (error) => {
-          this.showSpinner = false;
-          console.error('Login failed', error);
-        }
-      );
+        );
+    } else {
+      console.log(1);
     }
     return;
   }
@@ -146,6 +181,7 @@ export class AddCustomerComponent implements OnInit {
   }
 
   public getAddressPredictions(event: Event) {
+    return;
     if (event) {
       const inputElement = event.target as HTMLInputElement;
       let company = inputElement.value;

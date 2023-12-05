@@ -2,7 +2,7 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
-  <span class="title">Add Customer</span>
+  <span class="title">{{customerData ? 'Edit' : 'Add'}} Customer</span>
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">
     <mat-card-header>
@@ -55,7 +55,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Company Name</mat-label>
-            <input matInput formControlName="company_name" (input)="getAddressPredictions($event)">
+            <input matInput formControlName="company_name">
             <mat-error *ngIf="companyForm.get('company_name')?.invalid && companyForm.get('company_name')?.touched">
               Company Name is required
             </mat-error>
@@ -145,8 +145,9 @@
           <mat-form-field class="full-width">
             <mat-label>TimeZone</mat-label>
             <!-- <input matInput formControlName="timezone"> -->
-            <mat-select>
-              <mat-option *ngFor="let timezone of timezones"  value="timezone.timezone">{{timezone.timezone}}</mat-option>
+            <mat-select formControlName="timezone">
+              <mat-option *ngFor="let timezone of timezones"
+                value="timezone.timezone">{{timezone.timezone}}</mat-option>
             </mat-select>
             <mat-error *ngIf="companyForm.get('timezone')?.invalid && companyForm.get('timezone')?.touched">
               TimeZone is required
@@ -272,7 +273,7 @@
           </div>
         </mat-card-content>
         <mat-card-actions class="action-btns">
-          <button mat-raised-button color="primary" type="submit">Primary</button>
+          <button mat-raised-button color="primary" type="submit">Submit</button>
           <button mat-raised-button class="cancel-btn" type="button">Cancel</button>
         </mat-card-actions>
       </mat-card>

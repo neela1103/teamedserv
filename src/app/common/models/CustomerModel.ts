@@ -1,12 +1,13 @@
 export class CustomerModel {
   [key: string]: any;
+  public customer_id: number;
   public username: string;
   public password: string;
   public company_name: string;
   public federal_no: string;
   public physical_address: string;
   public mailing_address: string;
-  public email_id: string;
+  public company_email: string;
   public phone: string;
   public fax: string;
   public website: string;
@@ -21,16 +22,17 @@ export class CustomerModel {
   public payment_terms: string;
   public notes: string;
   public company_id: string;
-  public user_type!:number;
+  public user_type!: number;
 
   constructor() {
+    this.customer_id = 0;
     this.username = '';
     this.password = '';
     this.company_name = '';
     this.federal_no = '';
     this.physical_address = '';
     this.mailing_address = '';
-    this.email_id = '';
+    this.company_email = '';
     this.phone = '';
     this.fax = '';
     this.website = '';

@@ -4,5 +4,7 @@ export enum APIConstant {
   // customers
   GET_CUSTOMERS = 'customers',
   ADD_CUSTOMER = 'customer/add',
+  DELETE_CUSTOMER = 'customer/delete',
+  EDIT_CUSTOMER = 'customer/edit',
   GET_TIMEZONE = 'timezones',
 }
