@@ -21,6 +21,7 @@ export class CustomerModel {
   public payment_terms: string;
   public notes: string;
   public company_id: string;
+  public user_type!:number;
 
   constructor() {
     this.username = '';

@@ -1,19 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
+import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { GoogleService } from 'src/app/shared/services/google/google.service';
 
 @Component({
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.scss'],
 })
-export class AddCustomerComponent {
+export class AddCustomerComponent implements OnInit {
+  public showSpinner: Boolean = false;
+  public isUnameAvailable: Boolean = true;
+  public isChecking: Boolean = false;
+  public timezones: any;
+  public addressPredictions: any;
+
   companyForm = this.fb.group({
-    username: ['', [Validators.required, Validators.email]],
+    username: [
+      '',
+      [
+        Validators.required,
+        Validators.email,
+        this.usernameAvailabilityValidator.bind(this),
+      ],
+    ],
     password: ['', Validators.required],
     company_name: ['', Validators.required],
     federal_no: [
@@ -60,12 +76,24 @@ export class AddCustomerComponent {
     notes: '',
     company_id: ['', Validators.required],
     status: [true, Validators.required],
+    user_type: 1,
   });
 
-  constructor(private fb: FormBuilder, private _apiService: ApiService) {}
+  constructor(
+    private fb: FormBuilder,
+    private _apiService: ApiService,
+    private router: Router,
+    private _authService: AuthService,
+    private _googleService: GoogleService
+  ) {}
+
+  ngOnInit(): void {
+    this.getTimeZones();
+  }
 
   onSubmit(): void {
     if (this.companyForm.valid) {
+      this.showSpinner = true;
       const formModel: CustomerModel = this.companyForm.value as CustomerModel;
       const formData = new FormData();
 
@@ -74,17 +102,60 @@ export class AddCustomerComponent {
         const value = formModel[key];
         formData.append(key, value);
       }
-      this._apiService
-        .post(APIConstant.ADD_CUSTOMER, formData)
-        .subscribe((res) => {
+      this.showSpinner = true;
+      this._apiService.post(APIConstant.ADD_CUSTOMER, formData).subscribe(
+        (res) => {
           if (res) {
-            console.log(res);
+            this.showSpinner = false;
+            this.router.navigate(['/customer']);
+          } else {
+            this.showSpinner = false;
           }
-        });
-
-      // console.log(formModel);
+        },
+        (error) => {
+          this.showSpinner = false;
+          console.error('Login failed', error);
+        }
+      );
     }
     return;
+  }
+
+  public usernameAvailabilityValidator(control: any) {
+    if (this.isUnameAvailable === false) {
+      return { notAvailable: true };
+    }
+    return null;
+  }
+
+  public checkUsernameAvailable(event: Event) {
+    // this.isUnameAvailable = !this.isUnameAvailable
+    if (!this.companyForm.get('username')?.hasError('email')) {
+      const inputElement = event.target as HTMLInputElement;
+      let username = inputElement.value;
+      let fd = new FormData();
+      fd.append('username', username);
+      this.isChecking = true;
+      this._authService.isUsernameAvailable(fd).subscribe((response: any) => {
+        this.isChecking = false;
+        const isAvailable: boolean = response && response.status;
+        this.isUnameAvailable = isAvailable;
+        this.companyForm.get('username')?.updateValueAndValidity();
+      });
+    }
+  }
+
+  public getAddressPredictions(event: Event) {
+    if (event) {
+      const inputElement = event.target as HTMLInputElement;
+      let company = inputElement.value;
+      this._googleService
+        .getAddressPredictions(company)
+        .subscribe((predictions: any) => {
+          this.addressPredictions = predictions?.predictions || [];
+          console.log(this.addressPredictions);
+        });
+    }
   }
 
   public handleFederalNo(event: Event) {
@@ -172,5 +243,23 @@ export class AddCustomerComponent {
     } else {
       this.companyForm.patchValue({ mailing_address: '' });
     }
+  }
+
+  public getTimeZones() {
+    this.showSpinner = true;
+    this._apiService.get(APIConstant.GET_TIMEZONE).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.timezones = res.data;
+        } else {
+          console.error('Timexone fetch failed');
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Timexone fetch failed', error);
+      }
+    );
   }
 }

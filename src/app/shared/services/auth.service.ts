@@ -1,17 +1,18 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { NavItemsContant } from 'src/app/common/constants/NavItemsConstant';
 import { UserRoleConstant } from 'src/app/common/constants/UserRolesConstant';
 import { NavItemNode } from 'src/app/common/models/NavItemNodeModel';
 import { NavLinksModel } from 'src/app/common/models/NavLinksModel';
 import { UserAuthModel } from 'src/app/common/models/UserAuthModel';
+import { APIConstant } from 'src/app/common/constants/APIConstant';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +52,10 @@ export class AuthService {
   public userData$: Observable<any> = this.userDataSubject.asObservable();
   public userProfile: any;
   private baseUrl = 'https://app.teamedserv.com/api';
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) {
     const userData = this.getUserData();
     if (userData) {
       this.userDataSubject.next(userData);
@@ -114,5 +118,22 @@ export class AuthService {
     if (this.userProfile) this.isLoggedIn = true;
     else this.isLoggedIn = false;
     return !!this.userProfile && Object.keys(this.userProfile).length !== 0; // Assuming userData exists if the user is logged in
+  }
+
+  public isUsernameAvailable(
+    userName: FormData
+  ): Observable<any> {
+    const url = `${this.baseUrl}/${APIConstant.IS_USERNAME_AVAILABLE}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.userProfile.token}`,
+      }),
+    };
+    return this.http.post(url, userName, httpOptions).pipe(
+      catchError((error: any) => {
+        console.error('Login failed', error);
+        return of(false); // Return false in case of error
+      })
+    );
   }
 }

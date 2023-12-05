@@ -24,8 +24,9 @@ import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { OverlaySpinnerComponent } from './shared/loader/overlay-spinner/overlay-spinner.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AuthComponent],
+  declarations: [AppComponent, HomeComponent, AuthComponent, OverlaySpinnerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,7 +52,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatTableModule,
     MatPaginatorModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+  ],
+  exports:[
+    OverlaySpinnerComponent
   ],
   providers: [],
   bootstrap: [AppComponent],

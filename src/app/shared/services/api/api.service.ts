@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { APIConstant } from 'src/app/common/constants/APIConstant';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,12 @@ export class ApiService {
   private baseUrl = 'https://app.teamedserv.com/api';
 
   constructor(private http: HttpClient, private _authServive: AuthService) {}
+
+  public httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': `Bearer ${this._authServive.userProfile.token}`
+    })
+  };
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -25,20 +32,17 @@ export class ApiService {
 
   get<T>(endpoint: string): Observable<T> {
     const url = `${this.baseUrl}/${endpoint}`;
-    return this.http.get<T>(url).pipe(
+    return this.http.get<T>(url, this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
 
   post<T, U>(endpoint: string, data: U): Observable<T> {
     const url = `${this.baseUrl}/${endpoint}`;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${this._authServive.userProfile.token}`
-      })
-    };
-    return this.http.post<T>(url, data,httpOptions).pipe(
+
+    return this.http.post<T>(url, data,this.httpOptions).pipe(
       catchError(this.handleError)
     );
   }
+
 }

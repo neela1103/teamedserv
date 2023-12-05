@@ -19,6 +19,7 @@ import {
 } from '@angular/material/radio';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [CustomersListComponent, AddCustomerComponent],
@@ -35,7 +36,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatButtonModule,
     MatRadioModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {

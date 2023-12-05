@@ -1,3 +1,6 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
   <span class="title">Add Customer</span>
   <mat-divider></mat-divider>
@@ -10,11 +13,18 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Username</mat-label>
-            <input matInput formControlName="username">
-            <mat-error *ngIf="companyForm.get('username')?.invalid && companyForm.get('username')?.touched">
+            <div class="uname-input">
+              <input matInput formControlName="username" (change)="checkUsernameAvailable($event)">
+              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </div>
+
+            <mat-error *ngIf="companyForm.get('username')?.hasError('email') && companyForm.get('username')?.touched">
               Username is invalid
             </mat-error>
-
+            <mat-hint *ngIf="!isUnameAvailable"
+              class="mat-mdc-form-field-error mat-mdc-form-field-bottom-align ng-tns-c19-25 ng-star-inserted">
+              Username is not available
+            </mat-hint>
           </mat-form-field>
         </div>
         <div class="col">
@@ -45,7 +55,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Company Name</mat-label>
-            <input matInput formControlName="company_name">
+            <input matInput formControlName="company_name" (input)="getAddressPredictions($event)">
             <mat-error *ngIf="companyForm.get('company_name')?.invalid && companyForm.get('company_name')?.touched">
               Company Name is required
             </mat-error>
@@ -102,7 +112,8 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Phone</mat-label>
-            <input matInput formControlName="phone" (input)="handleMobileNumber($event,'phone')" placeholder="Phone Number">
+            <input matInput formControlName="phone" (input)="handleMobileNumber($event,'phone')"
+              placeholder="Phone Number">
             <mat-error *ngIf="companyForm.get('phone')?.invalid && companyForm.get('phone')?.touched">
               Please enter a valid phone number in the format (XXX) XXX-XXXX
             </mat-error>
@@ -133,7 +144,10 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>TimeZone</mat-label>
-            <input matInput formControlName="timezone">
+            <!-- <input matInput formControlName="timezone"> -->
+            <mat-select>
+              <mat-option *ngFor="let timezone of timezones"  value="timezone.timezone">{{timezone.timezone}}</mat-option>
+            </mat-select>
             <mat-error *ngIf="companyForm.get('timezone')?.invalid && companyForm.get('timezone')?.touched">
               TimeZone is required
             </mat-error>
