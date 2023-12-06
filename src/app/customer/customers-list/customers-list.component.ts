@@ -56,6 +56,11 @@ export class CustomersListComponent implements AfterViewInit {
       state: { customerData: customerData },
     });
   }
+  navigateToView(customerData: CustomerModel) {
+    this.router.navigate(['/customer/view'], {
+      state: { customerData: customerData },
+    });
+  }
   handleDeleteCustomer(customerId: any) {
     let fd = new FormData();
     fd.append('customer_id', customerId);

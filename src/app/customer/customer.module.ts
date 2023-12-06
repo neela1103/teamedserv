@@ -23,9 +23,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
-
+import { ViewCustomerComponent } from './view-customer/view-customer.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AddUserComponent } from './add-user/add-user.component';
 @NgModule({
-  declarations: [CustomersListComponent, AddCustomerComponent],
+  declarations: [CustomersListComponent, AddCustomerComponent, ViewCustomerComponent, AddUserComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,
@@ -43,7 +46,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule,
+    FlexLayoutModule
   ],
   providers: [
     {

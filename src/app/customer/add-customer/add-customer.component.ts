@@ -92,7 +92,6 @@ export class AddCustomerComponent implements OnInit {
   ngOnInit(): void {
     this.getTimeZones();
     this.customerData = history.state.customerData;
-    console.log(this.customerData);
     this.companyForm.patchValue({
       customer_id: this.customerData.customer_id,
       username: this.customerData.username,

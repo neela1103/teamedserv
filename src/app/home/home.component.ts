@@ -9,6 +9,7 @@ import { DashboardCardsConstant } from '../common/constants/DashboardCardsConsta
 import { UserRoleConstant } from '../common/constants/UserRolesConstant';
 import { Observable } from 'rxjs';
 import { AuthService } from '../shared/services/auth.service';
+import { ResponsiveService } from '../shared/services/responsive/responsive.service';
 
 @Component({
   selector: 'app-home',
@@ -23,28 +24,18 @@ export class HomeComponent implements OnInit {
   columns: Boolean = true;
   public userData: any;
 
-  observeResolution(): Observable<boolean> {
-    return this.breakpointObserver
-      .observe([Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large])
-      .pipe(
-        map((result) => {
-          if (result.breakpoints[Breakpoints.Large]) {
-            return true; // Large screen: 4 columns
-          } else {
-            return false; // Small or Medium screen: 2 columns
-          }
-        })
-      );
-  }
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
-    this.observeResolution().subscribe((columns) => {
+  constructor(
+    private responsiveObserver: ResponsiveService,
+    private authService: AuthService
+  ) {
+    this.responsiveObserver.observeResolution().subscribe((columns) => {
       this.columns = columns;
     });
   }
   ngOnInit() {
-    this.authService.userData$.subscribe(userData => {
+    this.authService.userData$.subscribe((userData) => {
       this.userData = userData;
-      console.log(userData)
+      console.log(userData);
     });
     let allCards = DashboardCardsConstant.find(
       (card) => card.role === UserRoleConstant.ADMIN
