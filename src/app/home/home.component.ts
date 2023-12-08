@@ -6,7 +6,7 @@ import {
   DashboardCardsModel,
 } from '../common/models/DashboardCardsModel';
 import { DashboardCardsConstant } from '../common/constants/DashboardCardsConstant';
-import { UserRoleConstant } from '../common/constants/UserRolesConstant';
+import { UserTypeConstant } from '../common/constants/UserTypeConstant';
 import { Observable } from 'rxjs';
 import { AuthService } from '../shared/services/auth.service';
 import { ResponsiveService } from '../shared/services/responsive/responsive.service';
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
       console.log(userData);
     });
     let allCards = DashboardCardsConstant.find(
-      (card) => card.role === UserRoleConstant.ADMIN
+      (card) => card.role === UserTypeConstant.ADMIN
     )?.cards;
     this.cards = allCards?.setOne;
     this.cardsSet2 = allCards?.setTwo;

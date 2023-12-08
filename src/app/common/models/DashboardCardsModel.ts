@@ -1,4 +1,4 @@
-import { UserRoleConstant } from '../constants/UserRolesConstant';
+import { UserTypeConstant } from '../constants/UserTypeConstant';
 
 export interface Card {
   title: string;
@@ -8,7 +8,7 @@ export interface Card {
 }
 
 export class DashboardCardsModel {
-  public role: UserRoleConstant | undefined;
+  public role: UserTypeConstant | undefined;
   public cards: {
     setOne: Card[];
     setTwo: Card[];

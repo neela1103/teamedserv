@@ -1,9 +1,9 @@
 import { DashboardCardsModel } from '../models/DashboardCardsModel';
-import { UserRoleConstant } from './UserRolesConstant';
+import { UserTypeConstant } from './UserTypeConstant';
 
 export const DashboardCardsConstant: DashboardCardsModel[] = [
   {
-    role: UserRoleConstant.ADMIN,
+    role: UserTypeConstant.ADMIN,
     cards: {
       setOne: [
         {

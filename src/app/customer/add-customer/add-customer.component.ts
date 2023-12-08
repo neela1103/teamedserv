@@ -4,6 +4,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -78,7 +79,7 @@ export class AddCustomerComponent implements OnInit {
     notes: '',
     company_id: ['', Validators.required],
     status: [true, Validators.required],
-    user_type: 1,
+    user_type: UserTypeConstant.CUSTOMER,
   });
 
   constructor(
@@ -118,7 +119,6 @@ export class AddCustomerComponent implements OnInit {
 
   onSubmit(): void {
     if (this.companyForm.valid) {
-      this.showSpinner = true;
       const formModel: CustomerModel = this.companyForm.value as CustomerModel;
       const formData = new FormData();
 
@@ -136,12 +136,13 @@ export class AddCustomerComponent implements OnInit {
           formData
         )
         .subscribe(
-          (res) => {
-            if (res) {
+          (res: any) => {
+            if (res && res.status) {
               this.showSpinner = false;
               this.router.navigate(['/customer']);
             } else {
               this.showSpinner = false;
+              console.log(res.message);
             }
           },
           (error) => {
@@ -162,20 +163,23 @@ export class AddCustomerComponent implements OnInit {
     return null;
   }
 
-  public checkUsernameAvailable(event: Event) {
-    // this.isUnameAvailable = !this.isUnameAvailable
+  public async checkUsernameAvailable(event: Event) {
     if (!this.companyForm.get('username')?.hasError('email')) {
       const inputElement = event.target as HTMLInputElement;
       let username = inputElement.value;
-      let fd = new FormData();
-      fd.append('username', username);
-      this.isChecking = true;
-      this._authService.isUsernameAvailable(fd).subscribe((response: any) => {
-        this.isChecking = false;
-        const isAvailable: boolean = response && response.status;
+      try {
+        this.isChecking = true;
+        console.log(this.isChecking);
+        const isAvailable: boolean =
+          await this._authService.checkUsernameAvailable(username);
         this.isUnameAvailable = isAvailable;
         this.companyForm.get('username')?.updateValueAndValidity();
-      });
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.isChecking = false;
+        console.log(this.isChecking);
+      }
     }
   }
 

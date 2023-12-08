@@ -1,8 +1,8 @@
-import { UserRoleConstant } from '../constants/UserRolesConstant';
+import { UserTypeConstant } from '../constants/UserTypeConstant';
 
 export class NavLinksModel {
   public label: string;
-  public roles: UserRoleConstant[];
+  public roles: UserTypeConstant[];
   public subItems: NavLinksModel[];
   public icon: string;
   public url: string;

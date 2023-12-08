@@ -1,3 +1,5 @@
+import { UserTypeConstant } from '../constants/UserTypeConstant';
+
 export class CustomerModel {
   [key: string]: any;
   public customer_id: number;
@@ -22,7 +24,7 @@ export class CustomerModel {
   public payment_terms: string;
   public notes: string;
   public company_id: string;
-  public user_type!: number;
+  public user_type!: UserTypeConstant;
 
   constructor() {
     this.customer_id = 0;

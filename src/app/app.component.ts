@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { NavItemsContant } from './common/constants/NavItemsConstant';
 import { NavLinksModel } from './common/models/NavLinksModel';
-import { UserRoleConstant } from './common/constants/UserRolesConstant';
+import { UserTypeConstant } from './common/constants/UserTypeConstant';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   trigger,
@@ -73,13 +73,13 @@ export class AppComponent implements OnInit {
   public canAccessCompany() {
     if (!this.userProfile) this.userProfile = this.authService.getUserData();
     return (
-      this.userProfile.user_type === UserRoleConstant.ADMIN ||
-      this.userProfile.user_type === UserRoleConstant.CUSTOMER
+      this.userProfile.user_type === UserTypeConstant.ADMIN ||
+      this.userProfile.user_type === UserTypeConstant.CUSTOMER
     );
   }
   public canAccessAccount() {
     if (!this.userProfile) this.userProfile = this.authService.getUserData();
-    return this.userProfile.user_type === UserRoleConstant.PROFESSIONAL;
+    return this.userProfile.user_type === UserTypeConstant.PROFESSIONAL;
   }
   public onNodeClicked(node: NavLinksModel) {
     this.router.navigate([node.url]);

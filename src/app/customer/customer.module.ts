@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import {MatCheckboxModule} from '@angular/material/checkbox'
+import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxModule} from '@angular/material/checkbox'
 
 import {
   MAT_RADIO_DEFAULT_OPTIONS,
@@ -54,6 +54,10 @@ import { AddUserComponent } from './add-user/add-user.component';
     {
       provide: MAT_RADIO_DEFAULT_OPTIONS,
       useValue: { color: 'primary' },
+    },
+    {
+      provide: MAT_CHECKBOX_DEFAULT_OPTIONS,
+      useValue: { color: 'primary' }, // Change 'primary' to 'accent' or 'warn' as desired
     },
   ],
 })

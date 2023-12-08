@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { NavItemsContant } from 'src/app/common/constants/NavItemsConstant';
-import { UserRoleConstant } from 'src/app/common/constants/UserRolesConstant';
+import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { NavItemNode } from 'src/app/common/models/NavItemNodeModel';
 import { NavLinksModel } from 'src/app/common/models/NavLinksModel';
 import { UserAuthModel } from 'src/app/common/models/UserAuthModel';
@@ -28,7 +28,7 @@ export class AuthService {
     };
   };
   navItems: NavLinksModel[] = NavItemsContant;
-  userRole: UserRoleConstant = UserRoleConstant.ADMIN;
+  userRole: UserTypeConstant = UserTypeConstant.ADMIN;
 
   treeControl = new FlatTreeControl<NavItemNode>(
     (node) => node.level,
@@ -52,10 +52,7 @@ export class AuthService {
   public userData$: Observable<any> = this.userDataSubject.asObservable();
   public userProfile: any;
   private baseUrl = 'https://app.teamedserv.com/api';
-  constructor(
-    private router: Router,
-    private http: HttpClient
-  ) {
+  constructor(private router: Router, private http: HttpClient) {
     const userData = this.getUserData();
     if (userData) {
       this.userDataSubject.next(userData);
@@ -120,9 +117,7 @@ export class AuthService {
     return !!this.userProfile && Object.keys(this.userProfile).length !== 0; // Assuming userData exists if the user is logged in
   }
 
-  public isUsernameAvailable(
-    userName: FormData
-  ): Observable<any> {
+  public isUsernameAvailable(userName: FormData): Observable<any> {
     const url = `${this.baseUrl}/${APIConstant.IS_USERNAME_AVAILABLE}`;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -135,5 +130,22 @@ export class AuthService {
         return of(false); // Return false in case of error
       })
     );
+  }
+
+  public async checkUsernameAvailable(username: string):  Promise<boolean> {
+    // this.isUnameAvailable = !this.isUnameAvailable
+    let fd = new FormData();
+    fd.append('username', username);
+    return new Promise<boolean>((resolve, reject) => {
+      this.isUsernameAvailable(fd).subscribe(
+        (response: any) => {
+          const isAvailable: boolean = response && response.status;
+          resolve(isAvailable);
+        },
+        (error) => {
+          reject(error); // Handle error if needed
+        }
+      );
+    });
   }
 }

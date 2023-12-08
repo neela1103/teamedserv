@@ -10,4 +10,6 @@ export enum APIConstant {
 
   // users
   GET_USERS = 'users',
+  ADD_USER = 'user/add',
+
 }

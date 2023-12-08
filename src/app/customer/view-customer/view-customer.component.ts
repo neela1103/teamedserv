@@ -2,7 +2,10 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { ResponsiveService } from 'src/app/shared/services/responsive/responsive.service';
@@ -19,6 +22,7 @@ export class ViewCustomerComponent implements OnInit {
   public showSpinner: Boolean = false;
   userData = new MatTableDataSource<any>();
   columns: Boolean = true;
+  defaultTabIndex!: number;
 
   displayedColumns: string[] = [
     'id',
@@ -91,7 +95,9 @@ export class ViewCustomerComponent implements OnInit {
 
   constructor(
     private responsiveObserver: ResponsiveService,
-    private _apiService: ApiService
+    private _apiService: ApiService,
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {
     this.responsiveObserver.observeResolution().subscribe((columns) => {
       this.columns = columns;
@@ -106,7 +112,10 @@ export class ViewCustomerComponent implements OnInit {
 
   ngOnInit() {
     this.customerData = history.state.customerData;
-    console.log(this.customerData);
+    this.defaultTabIndex =  history && history.state.tabIndex || 0;
+    if(!this.customerData)
+      this.router.navigate(['customer']);
+    console.log(history.state);
   }
 
   fetchUsers() {
@@ -125,5 +134,17 @@ export class ViewCustomerComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  getMapUrl(address: string | undefined) {
+      const url = `https://www.google.com/maps/embed/v1/place?q=${address}&key=${this.apiKey}`;
+      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+  navigateToAddUser() {
+    this.router.navigate(['customer/add-user'], {
+      state: { customerData: this.customerData }
+    });
+  }
+  canDeleteUser(user_type: UserTypeConstant) {
+    return user_type !== UserTypeConstant.CUSTOMER;
   }
 }
