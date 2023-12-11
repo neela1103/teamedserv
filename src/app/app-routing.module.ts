@@ -20,9 +20,16 @@ const routes: Routes = [
   },
   {
     path: 'customer',
-    loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule),
+    loadChildren: () =>
+      import('./customer/customer.module').then((m) => m.CustomerModule),
     canActivate: [AuthGuard],
-  }
+  },
+  {
+    path: 'medical-team',
+    loadChildren: () =>
+      import('./medical/medical.module').then((m) => m.MedicalModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

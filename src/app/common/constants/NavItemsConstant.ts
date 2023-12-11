@@ -29,14 +29,14 @@ export const NavItemsContant: NavLinksModel[] = [
     ],
     subItems: [
       {
-        label: 'View Medical Team',
+        label: 'All Medical Team',
         roles: [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
           UserTypeConstant.PROFESSIONAL,
         ],
         icon: '',
-        url: '/',
+        url: 'medical-team',
         subItems: [],
       },
       {

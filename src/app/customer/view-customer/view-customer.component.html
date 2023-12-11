@@ -1,10 +1,16 @@
 <main class="view">
-  <div class="spinner-overlay" *ngIf="false">
+  <div class="spinner-overlay" *ngIf="showSpinner">
     <mat-spinner diameter="50"></mat-spinner>
   </div>
   <mat-card class="customer-card">
     <mat-card-header>
-      <mat-card-title>Customer/Company Details</mat-card-title>
+      <mat-card-title>
+        <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
+        <div class="icon-label-container">
+          <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+          <span>Customer/Company Details</span>
+        </div>
+      </mat-card-title>
       <!-- <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button> -->
     </mat-card-header>
     <mat-card-content>
@@ -12,6 +18,10 @@
         <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
             <mat-tab label="Company">
+              <div class="icon-label-container bordered">
+                <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
+                <span>Edit</span>
+              </div>
               <div class="company-content">
                 <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of companyData">
                   <div fxFlex="40%" fxFlex.xs="100%">
@@ -30,7 +40,8 @@
             <mat-tab label="Users">
               <div class="users-content">
                 <div class="user-action">
-                  <button mat-raised-button color="primary" type="button" (click)="navigateToAddUser()">Add Users</button>
+                  <button mat-raised-button color="primary" type="button" (click)="navigateToAddUser()">Add
+                    Users</button>
                   <div class="search">
                     <input type="text" class="custom-input" placeholder="Search">
                   </div>
@@ -83,7 +94,7 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">
           <iframe width="600" height="450" frameborder="0" style="border:0"
-          [src]="getMapUrl(customerData?.physical_address)" allowfullscreen></iframe>
+            [src]="getMapUrl(customerData?.physical_address)" allowfullscreen></iframe>
 
         </mat-grid-tile>
       </mat-grid-list>

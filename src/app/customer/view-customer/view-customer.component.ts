@@ -1,9 +1,9 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
@@ -105,6 +105,11 @@ export class ViewCustomerComponent implements OnInit {
     });
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: Event) {
+    console.log('first refreshed');
+  }
+
   ngAfterViewInit() {
     this.userData.paginator = this.paginator;
     this.fetchUsers();
@@ -112,10 +117,25 @@ export class ViewCustomerComponent implements OnInit {
 
   ngOnInit() {
     this.customerData = history.state.customerData;
-    this.defaultTabIndex =  history && history.state.tabIndex || 0;
-    if(!this.customerData)
-      this.router.navigate(['customer']);
+    this.defaultTabIndex = (history && history.state.tabIndex) || 0;
+    if (!this.customerData) this.router.navigate(['customer']);
     console.log(history.state);
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (this.isPageRefresh()) {
+          console.log('refreshed');
+        }
+      }
+    });
+  }
+
+  isPageRefresh(): boolean {
+    return (
+      window.performance &&
+      window.performance.navigation.type ===
+        window.performance.navigation.TYPE_RELOAD
+    );
   }
 
   fetchUsers() {
@@ -127,6 +147,7 @@ export class ViewCustomerComponent implements OnInit {
         if (res && res.status) {
           console.log(res.message);
           this.userData = res.data;
+          this.showSpinner = false;
         }
       },
       (error) => {
@@ -136,15 +157,23 @@ export class ViewCustomerComponent implements OnInit {
     );
   }
   getMapUrl(address: string | undefined) {
-      const url = `https://www.google.com/maps/embed/v1/place?q=${address}&key=${this.apiKey}`;
-      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    const url = `https://www.google.com/maps/embed/v1/place?q=${address}&key=${this.apiKey}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   navigateToAddUser() {
     this.router.navigate(['customer/add-user'], {
-      state: { customerData: this.customerData }
+      state: { customerData: this.customerData },
     });
   }
   canDeleteUser(user_type: UserTypeConstant) {
     return user_type !== UserTypeConstant.CUSTOMER;
+  }
+  navigateBack() {
+    this.router.navigate(['customer']);
+  }
+  navigateToEdit() {
+    this.router.navigate(['/customer/edit'], {
+      state: { customerData: this.customerData },
+    });
   }
 }

@@ -301,4 +301,9 @@ export class AddCustomerComponent implements OnInit {
       }
     );
   }
+  public handleCancel() {
+    this.router.navigate(['customer'], {
+      state: { customerData: this.customerData },
+    });
+  }
 }
