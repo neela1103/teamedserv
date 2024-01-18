@@ -51,7 +51,7 @@ export class AuthService {
   private userDataSubject = new BehaviorSubject<any>(null);
   public userData$: Observable<any> = this.userDataSubject.asObservable();
   public userProfile: any;
-  private baseUrl = 'https://app.teamedserv.com/api';
+  private baseUrl = 'https://app.profmedservices.com/api';
   constructor(private router: Router, private http: HttpClient) {
     const userData = this.getUserData();
     if (userData) {
