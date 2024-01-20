@@ -2,11 +2,13 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 <form [formGroup]="medicalForm" (ngSubmit)="onSubmit()">
-  <span class="title">{{medicalData ? 'Edit' : 'Add'}} Medical Team</span>
+  <span class="title"> Medical Team</span>
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Add</mat-card-title>
+      <mat-card-title>
+        {{medicalData ? 'Edit' : 'Add'}} Medical Team
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">

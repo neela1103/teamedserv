@@ -7,13 +7,13 @@ import { AuthService } from '../auth.service';
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'https://app.teamedserv.com/api';
+  private baseUrl = 'https://app.profmedservices.com/api';
 
   constructor(private http: HttpClient, private _authServive: AuthService) {}
 
   public httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${this._authServive.userProfile.token}`
+      'Token': `Bearer ${this._authServive.userProfile.token}`
     })
   };
 

@@ -48,6 +48,21 @@ export class AddMedicalComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.medicalData = history.state.medicalData;
+    this.medicalForm.patchValue({
+      customer_id: this.medicalData.customer_id,
+      first_name: this.medicalData.first_name,
+      last_name: this.medicalData.last_name,
+      describe: this.medicalData.describe,
+      email: this.medicalData.email,
+      profession: this.medicalData.profession,
+      ethnicity: this.medicalData.ethnicity,
+      languages: this.medicalData.languages,
+      county: this.medicalData.county,
+      service_area: this.medicalData.service_area,
+      phone: this.medicalData.phone,
+      address: this.medicalData.address,
+      internal_notes: this.medicalData.internal_notes,
+    });
     this.getFieldData();
   }
   onSubmit() {}

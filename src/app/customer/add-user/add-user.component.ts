@@ -32,7 +32,7 @@ export class AddUserComponent implements OnInit {
     ],
     password: ['', Validators.required],
     first_name: ['', Validators.required],
-    middle_name: '',
+    // middle_name: '',
     last_name: ['', Validators.required],
     user_type: UserTypeConstant.CUSTOMER_USER,
     user_role: [0, Validators.required],
@@ -95,9 +95,7 @@ export class AddUserComponent implements OnInit {
     return password;
   }
   onSubmit() {
-    console.log(1);
     if (this.userForm.valid) {
-      console.log(this.userForm.value);
       this.userForm.patchValue({ customer_id: this.customerData.customer_id });
       const formModel: UserModel = this.userForm.value as UserModel;
       const formData = new FormData();

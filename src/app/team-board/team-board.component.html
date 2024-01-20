@@ -1,0 +1,77 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<span class="title">Team Board</span>
+<mat-divider></mat-divider>
+<mat-card class="shipping-card">
+  <mat-card-header class="card-top">
+    <mat-card-title>
+      <form [formGroup]="teamBoardForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <button mat-raised-button
+            [ngClass]="{'btn-active' : teamBoardForm.get('board_type')?.value === TeamBoardType.TEAM}" type="button"
+            (click)="setBoardType(TeamBoardType.TEAM)">Team Board</button>
+          <button mat-raised-button
+            [ngClass]="{'btn-active': teamBoardForm.get('board_type')?.value === TeamBoardType.PROFMED}" type="button"
+            (click)="setBoardType(TeamBoardType.PROFMED)">ProfMed Board</button>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Languages</mat-label>
+              <div class="uname-input">
+                <!-- <input matInput formControlName="languages"> -->
+                <mat-select formControlName="language" multiple>
+                  <mat-option *ngFor="let languages of fieldData?.languages"
+                    [value]="languages.lid">{{languages.title}}</mat-option>
+                </mat-select>
+              </div>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>County</mat-label>
+              <!-- <input matInput formControlName="county"> -->
+              <mat-select formControlName="county" multiple>
+                <mat-option *ngFor="let region of fieldData?.region" value="region.rid">{{region.title}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Service Area</mat-label>
+              <div class="uname-input">
+                <mat-select formControlName="service_area" multiple>
+                  <mat-option *ngFor="let service of fieldData?.serviceArea"
+                    value="service.said">{{service.service_area_title}}</mat-option>
+                </mat-select>
+              </div>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Profession</mat-label>
+              <div class="uname-input">
+                <mat-select formControlName="profession" multiple>
+                  <mat-option *ngFor="let profession of fieldData?.profession"
+                    value="profession.prid">{{profession.title}}</mat-option>
+                </mat-select>
+              </div>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row actions">
+          <button mat-raised-button class="btn-active" type="submit">Apply</button>
+          <button mat-raised-button type="button">Reset</button>
+        </div>
+      </form>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <iframe width="100%" height="450" frameborder="0" style="border:0" allowfullscreen [src]="getMapUrl()">
+      </iframe>
+    </div>
+  </mat-card-content>
+</mat-card>

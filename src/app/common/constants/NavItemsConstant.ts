@@ -18,7 +18,7 @@ export const NavItemsContant: NavLinksModel[] = [
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     subItems: [],
     icon: 'group',
-    url: '/',
+    url: '/team-board',
   },
   {
     label: 'Medical Team',

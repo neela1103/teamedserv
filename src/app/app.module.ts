@@ -25,8 +25,9 @@ import { HttpClientModule } from '@angular/common/http'; // Import HttpClientMod
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { OverlaySpinnerComponent } from './shared/loader/overlay-spinner/overlay-spinner.component';
+import { TeamBoardComponent } from './team-board/team-board.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AuthComponent, OverlaySpinnerComponent],
+  declarations: [AppComponent, HomeComponent, AuthComponent, OverlaySpinnerComponent, TeamBoardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -121,7 +121,7 @@ export class AuthService {
     const url = `${this.baseUrl}/${APIConstant.IS_USERNAME_AVAILABLE}`;
     const httpOptions = {
       headers: new HttpHeaders({
-        Authorization: `Bearer ${this.userProfile.token}`,
+        'Token': `Bearer ${this.userProfile.token}`,
       }),
     };
     return this.http.post(url, userName, httpOptions).pipe(

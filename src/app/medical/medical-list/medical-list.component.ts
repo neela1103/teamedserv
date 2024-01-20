@@ -57,9 +57,9 @@ export class MedicalListComponent implements OnInit {
     this.router.navigate(['/medical-team/add']);
   }
 
-  navigateToEdit(customerData: MedicalTeamModel) {
+  navigateToEdit(medicalData: MedicalTeamModel) {
     this.router.navigate(['/medical-team/edit'], {
-      state: { customerData: customerData },
+      state: { medicalData: medicalData },
     });
   }
   navigateToView(customerData: MedicalTeamModel) {
