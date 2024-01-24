@@ -160,6 +160,23 @@ export class ViewCustomerComponent implements OnInit {
     const url = `https://www.google.com/maps/embed/v1/place?q=${address}&key=${this.apiKey}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
+  deleteUser(userId: number) {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('user_id', String(userId));
+    this._apiService.post(APIConstant.DELETE_USER, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.fetchUsers();
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log(error);
+      }
+    );
+  }
   navigateToAddUser() {
     this.router.navigate(['customer/add-user'], {
       state: { customerData: this.customerData },
@@ -174,6 +191,11 @@ export class ViewCustomerComponent implements OnInit {
   navigateToEdit() {
     this.router.navigate(['/customer/edit'], {
       state: { customerData: this.customerData },
+    });
+  }
+  editUser() {
+    this.router.navigate(['/customer/user/edit'], {
+      state: { userData: this.userData },
     });
   }
 }

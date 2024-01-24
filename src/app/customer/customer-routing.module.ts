@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'edit', component: AddCustomerComponent, pathMatch: 'full' },
   { path: 'view', component: ViewCustomerComponent, pathMatch: 'full' },
   { path: 'add-user', component: AddUserComponent, pathMatch: 'full' },
+  { path: 'user/edit', component: AddUserComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

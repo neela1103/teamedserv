@@ -20,6 +20,7 @@ export class AddUserComponent implements OnInit {
   public showSpinner: Boolean = false;
   public userRoles: any = UserTypes;
   public customerData!: any;
+  public userData!: any;
   userForm = this.fb.group({
     customer_id: 0,
     username: [
@@ -36,6 +37,7 @@ export class AddUserComponent implements OnInit {
     last_name: ['', Validators.required],
     user_type: UserTypeConstant.CUSTOMER_USER,
     user_role: [0, Validators.required],
+    user_id: 0,
     force_password_change: true,
   });
 
@@ -47,7 +49,25 @@ export class AddUserComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.customerData = history.state.customerData;
+    this.userData = history.state.userData;
     console.log(this.customerData);
+    if (!this.customerData && !this.userData) {
+      this.router.navigate(['/customer/view']);
+    }
+    if (this.userData) {
+      this.userForm.patchValue({
+        customer_id: this.userData[0].customer_id,
+        user_id: this.userData[0].id,
+        username: this.userData[0].username,
+        first_name: this.userData[0].first_name,
+        last_name: this.userData[0].last_name,
+        user_type: this.userData[0].user_type,
+        user_role: parseInt(this.userData[0].role),
+        force_password_change: false,
+      });
+      this.userForm.get('username')?.disable();
+      this.userForm.get('password')?.disable();
+    }
   }
 
   public usernameAvailabilityValidator(control: any) {
@@ -96,7 +116,7 @@ export class AddUserComponent implements OnInit {
   }
   onSubmit() {
     if (this.userForm.valid) {
-      this.userForm.patchValue({ customer_id: this.customerData.customer_id });
+      this.userForm.patchValue({ customer_id: this.customerData?.customer_id || this.userData.customer_id  });
       const formModel: UserModel = this.userForm.value as UserModel;
       const formData = new FormData();
 
@@ -107,24 +127,29 @@ export class AddUserComponent implements OnInit {
       }
       this.showSpinner = true;
 
-      this._apiService.post(APIConstant.ADD_USER, formData).subscribe(
-        (res: any) => {
-          if (res && res.status) {
-            console.log(res.message);
+      this._apiService
+        .post(
+          this.userData ? APIConstant.EDIT_USER : APIConstant.ADD_USER,
+          formData
+        )
+        .subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              console.log(res.message);
+              this.showSpinner = false;
+              this.router.navigate(['/customer/view'], {
+                state: { customerData: this.customerData, tabIndex: 1 },
+              });
+            } else {
+              this.showSpinner = false;
+              console.log(res.message);
+            }
+          },
+          (error) => {
+            console.log(error);
             this.showSpinner = false;
-            this.router.navigate(['/customer/view'], {
-              state: { customerData: this.customerData, tabIndex: 1 },
-            });
-          } else {
-            this.showSpinner = false;
-            console.log(res.message);
           }
-        },
-        (error) => {
-          console.log(error);
-          this.showSpinner = false;
-        }
-      );
+        );
     }
   }
   public handleForcePasswordChange(value: any) {

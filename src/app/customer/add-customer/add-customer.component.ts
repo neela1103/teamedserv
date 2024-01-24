@@ -150,8 +150,6 @@ export class AddCustomerComponent implements OnInit {
             console.error('Operation failed', error);
           }
         );
-    } else {
-      console.log(1);
     }
     return;
   }

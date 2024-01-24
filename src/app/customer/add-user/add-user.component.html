@@ -16,7 +16,7 @@
               <mat-form-field class="full-width">
                 <mat-label>Username</mat-label>
                 <div class="uname-input">
-                  <input matInput formControlName="username" (change)="checkUsernameAvailable($event)">
+                  <input matInput formControlName="username" (change)="checkUsernameAvailable($event)" [disabled]="true">
                   <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status"
                     aria-hidden="true"></span>
                 </div>

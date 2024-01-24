@@ -122,8 +122,8 @@
             <div class="uname-input">
               <!-- <input matInput formControlName="service_area"> -->
               <mat-select formControlName="service_area" multiple>
-                <mat-option *ngFor="let service of fieldData?.service_area"
-                  value="service.said">{{service.title}}</mat-option>
+                <mat-option *ngFor="let service of fieldData?.serviceArea"
+                  value="service.said">{{service.service_area_title}}</mat-option>
               </mat-select>
             </div>
             <mat-error *ngIf="medicalForm.get('service_area')?.invalid && medicalForm.get('service_area')?.touched">

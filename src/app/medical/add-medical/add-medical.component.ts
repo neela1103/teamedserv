@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -44,28 +45,66 @@ export class AddMedicalComponent implements OnInit {
     private fb: FormBuilder,
     private _apiService: ApiService,
     private router: Router,
-    private _authService: AuthService
+    private _authService: AuthService,
   ) {}
   ngOnInit(): void {
     this.medicalData = history.state.medicalData;
-    this.medicalForm.patchValue({
-      customer_id: this.medicalData.customer_id,
-      first_name: this.medicalData.first_name,
-      last_name: this.medicalData.last_name,
-      describe: this.medicalData.describe,
-      email: this.medicalData.email,
-      profession: this.medicalData.profession,
-      ethnicity: this.medicalData.ethnicity,
-      languages: this.medicalData.languages,
-      county: this.medicalData.county,
-      service_area: this.medicalData.service_area,
-      phone: this.medicalData.phone,
-      address: this.medicalData.address,
-      internal_notes: this.medicalData.internal_notes,
-    });
+    if (this.medicalData) {
+      this.medicalForm.patchValue({
+        customer_id: this.medicalData.customer_id,
+        first_name: this.medicalData.first_name,
+        last_name: this.medicalData.last_name,
+        describe: this.medicalData.describe,
+        email: this.medicalData.email,
+        profession: this.medicalData.profession,
+        ethnicity: this.medicalData.ethnicity,
+        languages: this.medicalData.languages,
+        county: this.medicalData.county,
+        service_area: this.medicalData.service_area,
+        phone: this.medicalData.phone,
+        address: this.medicalData.address,
+        internal_notes: this.medicalData.internal_notes,
+      });
+    }
     this.getFieldData();
   }
-  onSubmit() {}
+  onSubmit(): void {
+    if (this.medicalForm.valid) {
+      const formModel: MedicalTeamModel = this.medicalForm
+        .value as MedicalTeamModel;
+      const formData = new FormData();
+
+      // Convert JSON object to FormData
+      for (const key of Object.keys(formModel)) {
+        const value = formModel[key];
+        formData.append(key, value);
+      }
+      this.showSpinner = true;
+      this._apiService
+        .post(
+          this.medicalData
+            ? APIConstant.EDIT_MEDICALTEAM
+            : APIConstant.ADD_MEDICALTEAM,
+          formData
+        )
+        .subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              // this.router.navigate(['/medical-team']);
+            } else {
+              this.showSpinner = false;
+              console.log(res.message);
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.error('Operation failed', error);
+          }
+        );
+    }
+    return;
+  }
 
   public getFieldData() {
     this.showSpinner = true;

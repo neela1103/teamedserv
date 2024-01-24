@@ -16,6 +16,8 @@ export enum APIConstant {
   // users
   GET_USERS = 'users',
   ADD_USER = 'user/add',
+  EDIT_USER = 'user/edit',
+  DELETE_USER = 'user/delete',
 
   // team-board
   FILTER_MEDICAL_TEAM = 'medical/filter-medical-team',
