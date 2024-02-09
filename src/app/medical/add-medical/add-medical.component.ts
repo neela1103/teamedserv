@@ -45,8 +45,9 @@ export class AddMedicalComponent implements OnInit {
     private fb: FormBuilder,
     private _apiService: ApiService,
     private router: Router,
-    private _authService: AuthService,
+    private _authService: AuthService
   ) {}
+
   ngOnInit(): void {
     this.medicalData = history.state.medicalData;
     if (this.medicalData) {
@@ -68,16 +69,27 @@ export class AddMedicalComponent implements OnInit {
     }
     this.getFieldData();
   }
-  onSubmit(): void {
+
+  public onSubmit(): void {
     if (this.medicalForm.valid) {
       const formModel: MedicalTeamModel = this.medicalForm
         .value as MedicalTeamModel;
       const formData = new FormData();
 
       // Convert JSON object to FormData
-      for (const key of Object.keys(formModel)) {
+      for (let key of Object.keys(formModel)) {
+        let newKey;
+        if(key == 'first_name') newKey = 'fname';
+        else if (key == 'last_name') newKey = 'lname';
+        else if (key == 'describe') newKey = 'discibe';
+        else if (key == 'internal_notes') newKey = 'internalNotes';
+        else if (key == 'county') newKey = 'country';
+        else if (key == 'service_area') newKey = 'serviceArea';
+
+
+
         const value = formModel[key];
-        formData.append(key, value);
+        formData.append(newKey || key, value);
       }
       this.showSpinner = true;
       this._apiService
@@ -94,7 +106,6 @@ export class AddMedicalComponent implements OnInit {
               // this.router.navigate(['/medical-team']);
             } else {
               this.showSpinner = false;
-              console.log(res.message);
             }
           },
           (error) => {
@@ -122,15 +133,18 @@ export class AddMedicalComponent implements OnInit {
       }
     );
   }
+
   public usernameAvailabilityValidator(control: any) {
     if (this.isUnameAvailable === false) {
       return { notAvailable: true };
     }
     return null;
   }
+
   public handleCancel() {
     this.router.navigate(['medical-team']);
   }
+
   public async checkUsernameAvailable(event: Event) {
     if (!this.medicalForm.get('email')?.hasError('email')) {
       const inputElement = event.target as HTMLInputElement;

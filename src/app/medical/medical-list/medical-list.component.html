@@ -12,56 +12,50 @@
         <input type="text" class="custom-input" placeholder="Search">
       </div>
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource">
+        <table mat-table [dataSource]="dataSource" class="custom-table">
 
           <!-- Position Column -->
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
           </ng-container>
 
           <!-- Name Column -->
           <ng-container matColumnDef="Name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.first_name + ' ' + element.last_name }} </td>
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Name </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.first_name + ' ' + element.last_name }} </td>
           </ng-container>
 
-          <!-- Weight Column -->
+          <!-- Email/Phone No Column -->
           <ng-container matColumnDef="Email/Phn No">
-            <th mat-header-cell *matHeaderCellDef> Email  <br>Phone No </th>
-            <td mat-cell *matCellDef="let element"> {{element.email}} <br> {{element.phone_no}} </td>
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Email <br>Phone No </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.email}} <br> {{element.phone_no}} </td>
           </ng-container>
 
+          <!-- Profession Column -->
           <ng-container matColumnDef="Profession">
-            <th mat-header-cell *matHeaderCellDef> Profession </th>
-            <td mat-cell *matCellDef="let element"> {{element.profession_name}} </td>
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Profession </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.profession_name}} </td>
           </ng-container>
 
+          <!-- Languages Column -->
           <ng-container matColumnDef="Languages">
-            <th mat-header-cell *matHeaderCellDef> Languages </th>
-            <td mat-cell *matCellDef="let element"> {{element.language_names}} </td>
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Languages </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.language_names}} </td>
           </ng-container>
 
-          <!-- <ng-container matColumnDef="Ethnicity">
-            <th mat-header-cell *matHeaderCellDef> Ethnicity </th>
-            <td mat-cell *matCellDef="let element"> {{element.ethnicity_name}} </td>
-          </ng-container> -->
-
+          <!-- Service Area Column -->
           <ng-container matColumnDef="Service_area">
-            <th mat-header-cell *matHeaderCellDef> Service Area </th>
-            <td mat-cell *matCellDef="let element"> {{element.service_area_names}} </td>
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Service Area </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.service_area_names}} </td>
           </ng-container>
 
-          <!-- <ng-container matColumnDef="Address">
-            <th mat-header-cell *matHeaderCellDef> Address </th>
-            <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-          </ng-container> -->
-
+          <!-- Action Column -->
           <ng-container matColumnDef="Action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;">
               <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
-              <mat-icon class="action-mat-icon"(click)="navigateToView(element)">remove_red_eye</mat-icon>
+              <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
               <mat-icon class="action-mat-icon" (click)="handleDeleteCustomer(element.customer_id)">delete</mat-icon>
             </td>
           </ng-container>

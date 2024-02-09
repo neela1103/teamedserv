@@ -48,7 +48,10 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email">
+            <div class="uname-input">
+              <input matInput formControlName="email" (change)="checkUsernameAvailable($event)">
+              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </div>
             <mat-error *ngIf="medicalForm.get('email')?.invalid && medicalForm.get('email')?.touched">
               Email is required
             </mat-error>
@@ -63,7 +66,7 @@
               <!-- <input matInput formControlName="profession"> -->
               <mat-select formControlName="profession" multiple>
                 <mat-option *ngFor="let profession of fieldData?.profession"
-                  value="profession.prid">{{profession.title}}</mat-option>
+                  [value]="profession.prid">{{profession.title}}</mat-option>
               </mat-select>
             </div>
             <mat-error *ngIf="medicalForm.get('profession')?.invalid && medicalForm.get('profession')?.touched">
@@ -77,7 +80,7 @@
             <!-- <input matInput formControlName="ethnicity"> -->
             <mat-select formControlName="ethnicity">
               <mat-option *ngFor="let ethnicity of fieldData?.ethnicity"
-                value="ethnicity.eid">{{ethnicity.title}}</mat-option>
+                [value]="ethnicity.eid">{{ethnicity.title}}</mat-option>
             </mat-select>
             <mat-error *ngIf="medicalForm.get('ethnicity')?.invalid && medicalForm.get('ethnicity')?.touched">
               Ethnicity is required
@@ -94,7 +97,7 @@
               <!-- <input matInput formControlName="languages"> -->
               <mat-select formControlName="languages" multiple>
                 <mat-option *ngFor="let languages of fieldData?.languages"
-                  value="languages.lid">{{languages.title}}</mat-option>
+                  [value]="languages.lid">{{languages.title}}</mat-option>
               </mat-select>
             </div>
             <mat-error *ngIf="medicalForm.get('languages')?.invalid && medicalForm.get('languages')?.touched">
@@ -107,7 +110,7 @@
             <mat-label>County</mat-label>
             <!-- <input matInput formControlName="county"> -->
             <mat-select formControlName="county" multiple>
-              <mat-option *ngFor="let region of fieldData?.region" value="region.rid">{{region.title}}</mat-option>
+              <mat-option *ngFor="let region of fieldData?.region" [value]="region.rid">{{region.title}}</mat-option>
             </mat-select>
             <mat-error *ngIf="medicalForm.get('county')?.invalid && medicalForm.get('county')?.touched">
               County is required
@@ -123,7 +126,7 @@
               <!-- <input matInput formControlName="service_area"> -->
               <mat-select formControlName="service_area" multiple>
                 <mat-option *ngFor="let service of fieldData?.serviceArea"
-                  value="service.said">{{service.service_area_title}}</mat-option>
+                  [value]="service.said">{{service.service_area_title}}</mat-option>
               </mat-select>
             </div>
             <mat-error *ngIf="medicalForm.get('service_area')?.invalid && medicalForm.get('service_area')?.touched">

@@ -49,8 +49,21 @@ export class TeamBoardComponent implements OnInit {
   }
 
   getMapUrl() {
-    const url = `https://www.google.com/maps/embed/v1/view?key=${this.apiKey}&center=0,0&zoom=15`;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    // const url = `https://www.google.com/maps/embed/v1/view?key=${this.apiKey}&center=0,0&zoom=15`;
+    // return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
+    const californiaCenter = "36.7783,-119.4179"; // Latitude, Longitude of California
+
+  // Specify the zoom level
+  const zoomLevel = 6;
+
+  // Construct the URL with the specified parameters
+  const baseUrl = `https://www.google.com/maps/embed/v1/view?key=${this.apiKey}`;
+  const queryParams = `&center=${californiaCenter}&zoom=${zoomLevel}`;
+  const url = `${baseUrl}${queryParams}`;
+
+  // Sanitize and return the URL
+  return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   public getFieldData() {

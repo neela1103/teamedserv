@@ -21,7 +21,7 @@ export class MedicalListComponent implements OnInit {
     // 'Ethnicity',
     'Service_area',
     // 'Address',
-    'Action'
+    'Action',
   ];
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
@@ -86,5 +86,11 @@ export class MedicalListComponent implements OnInit {
         console.log('Delete failed', error);
       }
     );
+  }
+  public refineLongText(value: string): string {
+    let values = value?.split(',');
+
+    if (values?.length > 2) return values?.splice(0, 2)?.join(',');
+    return value;
   }
 }
