@@ -124,7 +124,7 @@ export class AddMedicalComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              // this.router.navigate(['/medical-team']);
+              this.router.navigate(['/medical-team']);
             } else {
               this.showSpinner = false;
             }
@@ -258,5 +258,8 @@ export class AddMedicalComponent implements OnInit {
       default:
         break;
     }
+  }
+  public navigateBack() {
+    this.router.navigate(['/medical-team']);
   }
 }

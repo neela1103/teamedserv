@@ -150,11 +150,6 @@ mat-card {
   justify-content: end;
   gap: 10px;
 
-  .mat-mdc-raised-button {
-    background-color: #3c8dbc !important;
-    // color: #fff;
-  }
-
   .cancel-btn {
     background-color: #cecece !important;
   }
@@ -234,4 +229,40 @@ mat-card {
 
 .file-error {
   border-color: red;
+}
+
+.action-mat-icon {
+  font-size: 20px;
+}
+
+.header-label-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.header-label-container mat-icon {
+  margin-right: 8px;
+  /* Adjust margin between icon and text */
+  color: #36404e;
+  border: 1px solid gray;
+  padding: 5px 0 0 5px;
+  border-radius: 50%;
+}
+
+.tab-header-label-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.tab-header-label-container mat-icon {
+  margin-right: 8px;
+  /* Adjust margin between icon and text */
+  color: #33749b;
+}
+
+.mat-mdc-raised-button {
+  background-color: #3c8dbc !important;
+  // color: #fff;
 }

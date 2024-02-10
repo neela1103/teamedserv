@@ -304,4 +304,7 @@ export class AddCustomerComponent implements OnInit {
       state: { customerData: this.customerData },
     });
   }
+  public navigateBack() {
+    this.router.navigate(['/customer']);
+  }
 }

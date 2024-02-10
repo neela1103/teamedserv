@@ -2,7 +2,12 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 <form [formGroup]="medicalForm" (ngSubmit)="onSubmit()">
-  <span class="title"> Medical Team</span>
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      Medical Team</span>
+  </div>
+
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">
     <mat-card-header>
@@ -161,7 +166,8 @@
             </span>
           </div>
           <input id="fileInput" hidden #photoInput type="file" (change)="onFileSelected($event, fileType.PHOTO)">
-          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('photo')?.value}" (click)="photoInput.click()">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('photo')?.value}"
+            (click)="photoInput.click()">
             <div class="label-container">
               <div class="label-section">Choose file</div>
             </div>
@@ -178,7 +184,8 @@
             </span>
           </div>
           <input id="fileInput" hidden #licenceInput type="file" (change)="onFileSelected($event, fileType.LICENCE)">
-          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('licence')?.value}" (click)="licenceInput.click()">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('licence')?.value}"
+            (click)="licenceInput.click()">
             <div class="label-container">
               <div class="label-section">Choose file</div>
             </div>
@@ -193,7 +200,8 @@
             </span>
           </div>
           <input id="fileInput" hidden #resumeInput type="file" (change)="onFileSelected($event, fileType.RESUME)">
-          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('resume')?.value}" (click)="resumeInput.click()">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('resume')?.value}"
+            (click)="resumeInput.click()">
             <div class="label-container">
               <div class="label-section">Choose file</div>
             </div>

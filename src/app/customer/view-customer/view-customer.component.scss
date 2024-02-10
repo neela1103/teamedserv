@@ -21,18 +21,6 @@
     text-transform: uppercase;
   }
 
-  .icon-label-container {
-    display: flex;
-    align-items: center;
-
-  }
-
-  .icon-label-container mat-icon {
-    margin-right: 8px;
-    /* Adjust margin between icon and text */
-    color: #33749b;
-  }
-
   mat-card-content {
     padding-top: 10px;
   }

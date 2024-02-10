@@ -2,7 +2,11 @@
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
-  <span class="title">{{customerData ? 'Edit' : 'Add'}} Customer</span>
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      {{customerData ? 'Edit' : 'Add'}} Customer</span>
+  </div>
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">
     <mat-card-header>

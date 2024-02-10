@@ -93,4 +93,5 @@ export class MedicalListComponent implements OnInit {
     if (values?.length > 2) return values?.splice(0, 2)?.join(',');
     return value;
   }
+
 }
