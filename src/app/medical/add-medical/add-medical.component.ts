@@ -77,7 +77,7 @@ export class AddMedicalComponent implements OnInit {
         service_area: this.medicalData.service_area?.split(','),
         phone: this.medicalData.phone_no,
         address: this.medicalData.address,
-        internal_notes: this.medicalData.internal_notes,
+        internal_notes: this.medicalData.internal_notes || "",
       });
     }
     this.getFieldData();

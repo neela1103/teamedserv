@@ -62,9 +62,9 @@ export class MedicalListComponent implements OnInit {
       state: { medicalData: medicalData },
     });
   }
-  navigateToView(customerData: MedicalTeamModel) {
+  navigateToView(medicalData: MedicalTeamModel) {
     this.router.navigate(['/medical-team/view'], {
-      state: { customerData: customerData, tabIndex: 0 },
+      state: { pid: medicalData.pid, tabIndex: 0 },
     });
   }
   handleDeleteCustomer(customerId: any) {
