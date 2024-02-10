@@ -21,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddMedicalComponent } from './add-medical/add-medical.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 // import { MedicalListComponent } from '../medical-list/medical-list.component';
 
 
@@ -49,7 +50,8 @@ import { ViewMedicalComponent } from './view-medical/view-medical.component';
     MatIconModule,
     MatTabsModule,
     FlexLayoutModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ]
 })
 export class MedicalModule { }

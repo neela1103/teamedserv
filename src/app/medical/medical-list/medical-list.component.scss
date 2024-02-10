@@ -58,6 +58,13 @@ main {
           /* Set your desired color for odd rows */
         }
 
+        .icon-container {
+          display: flex;
+
+          .action-mat-icon {
+            font-size: 20px;
+          }
+        }
       }
     }
   }

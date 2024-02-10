@@ -6,40 +6,51 @@
   font-family: 'OpenSans';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/static/OpenSans-Regular.ttf') format('ttf'), /* Adjust font file path */
-       url('./assets/fonts/static/OpenSans-SemiBold.ttf') format('ttf'),
-       url('./assets/fonts/static/OpenSans-Bold.ttf') format('ttf'),
-       url('./assets/fonts/static/OpenSans-Light.ttf') format('ttf');
+  src: url('./assets/fonts/static/OpenSans-Regular.ttf') format('truetype'),
+    /* Adjust font file path */
+    url('./assets/fonts/static/OpenSans-SemiBold.ttf') format('truetype'),
+    url('./assets/fonts/static/OpenSans-Bold.ttf') format('truetype'),
+    url('./assets/fonts/static/OpenSans-Light.ttf') format('truetype');
 }
 
 @font-face {
   font-family: "OpenSans-Light";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Light.ttf")format('ttf');
+  src: url("./assets/fonts/static/OpenSans-Light.ttf")format('truetype');
 }
+
 @font-face {
   font-family: "OpenSans-Bold";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Bold.ttf")format('ttf');
+  src: url("./assets/fonts/static/OpenSans-Bold.ttf")format('truetype');
 }
+
 @font-face {
   font-family: "OpenSans-Regular";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Regular.ttf")format('ttf');
+  src: url("./assets/fonts/static/OpenSans-Regular.ttf")format('truetype');
 }
+
 @font-face {
   font-family: "OpenSans-SemiBold";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-SemiBold.ttf")format('ttf');
+  src: url("./assets/fonts/static/OpenSans-SemiBold.ttf")format('truetype');
 }
 
 
-html, body { height: 100%; }
-body { margin: 0;  }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'OpenSans' !important;
+}
 
 main {
   margin: 10px;
@@ -59,7 +70,8 @@ main {
   justify-content: center;
   align-items: center;
   z-index: 999;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent overlay */
 }
 
 .action-mat-icon {
@@ -70,12 +82,16 @@ main {
 
 .spinner-border {
   display: inline-block;
-  width: 1.25rem; /* Adjust size as needed */
-  height: 1.25rem; /* Adjust size as needed */
+  width: 1.25rem;
+  /* Adjust size as needed */
+  height: 1.25rem;
+  /* Adjust size as needed */
   vertical-align: text-bottom;
-  border: 3px solid rgba(0, 0, 0, 0.1); /* Spinner border color */
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  /* Spinner border color */
   border-radius: 50%;
-  border-top-color: #fff; /* Spinner color */
+  border-top-color: #fff;
+  /* Spinner color */
   animation: spinner-border 0.75s linear infinite;
 }
 
@@ -151,6 +167,7 @@ mat-card {
 .card-top {
   border-top: 2px solid #3c8dbc;
 }
+
 .title {
   font-size: 20px;
   font-weight: 500;
@@ -159,3 +176,62 @@ mat-card {
   letter-spacing: .0125em;
 }
 
+.align-base {
+  align-items: baseline;
+}
+
+.file-input {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #dadee5;
+  // width: 80%;
+  cursor: pointer;
+  border-radius: 4px;
+  max-width: 506px;
+
+  .label-container {
+
+    display: flex;
+    align-items: center;
+    background: #f0e9e9;
+    border-radius: 4px;
+    min-width: 106px;
+
+    .label-section {
+      padding: 5px 15px;
+    }
+  }
+
+  .name-section {
+    padding: 5px 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.file-input:focus {
+  border-color: #3c8dbc;
+}
+
+.text-sb {
+  font-family: 'OpenSans-SemiBold';
+}
+
+.help-text {
+  font-size: 12px;
+  color: #444;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  line-height: 16px;
+  /* font-family: 'OpenSans-SemiBold'; */
+  text-align: end;
+  display: block;
+}
+
+.file-error {
+  border-color: red;
+}

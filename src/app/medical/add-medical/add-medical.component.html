@@ -64,7 +64,7 @@
             <mat-label>Profession</mat-label>
             <div class="uname-input">
               <!-- <input matInput formControlName="profession"> -->
-              <mat-select formControlName="profession" multiple>
+              <mat-select formControlName="profession">
                 <mat-option *ngFor="let profession of fieldData?.profession"
                   [value]="profession.prid">{{profession.title}}</mat-option>
               </mat-select>
@@ -148,14 +148,61 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Address</mat-label>
-            <div class="uname-input">
-              <input matInput formControlName="address">
-            </div>
+            <input matInput formControlName="address">
             <mat-error *ngIf="medicalForm.get('address')?.invalid && medicalForm.get('address')?.touched">
               Address is invalid
             </mat-error>
           </mat-form-field>
         </div>
+        <div class="col">
+          <div> <span class="text-sb">Attach Passport size photo </span>
+            <span class="help-text">
+              ( allowed JPG, max size 1 mb)
+            </span>
+          </div>
+          <input id="fileInput" hidden #photoInput type="file" (change)="onFileSelected($event, fileType.PHOTO)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('photo')?.value}" (click)="photoInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">{{this.medicalForm.get('photo')?.value?.name || 'No file chosen'}}</div>
+          </div>
+          <span class="error-text">{{photoError}}</span>
+        </div>
+      </div>
+      <div class="row" style="padding-bottom: 25px;">
+        <div class="col">
+          <div> <span class="text-sb">Attach Licence </span>
+            <span class="help-text">
+              ( allowed PDF, max size 2 mb)
+            </span>
+          </div>
+          <input id="fileInput" hidden #licenceInput type="file" (change)="onFileSelected($event, fileType.LICENCE)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('licence')?.value}" (click)="licenceInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">{{this.medicalForm.get('licence')?.value?.name || 'No file chosen'}}</div>
+          </div>
+          <span class="error-text">{{licenceError}}</span>
+        </div>
+        <div class="col">
+          <div> <span class="text-sb">Attach Resume </span>
+            <span class="help-text">
+              ( allowed PDF, max size 2 mb)
+            </span>
+          </div>
+          <input id="fileInput" hidden #resumeInput type="file" (change)="onFileSelected($event, fileType.RESUME)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('resume')?.value}" (click)="resumeInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">{{this.medicalForm.get('resume')?.value?.name || 'No file chosen'}}</div>
+          </div>
+          <span class="error-text">{{resumeError}}</span>
+        </div>
+      </div>
+      <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Internal Notes</mat-label>
