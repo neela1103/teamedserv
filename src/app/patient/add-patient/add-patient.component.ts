@@ -23,9 +23,9 @@ export class AddPatientComponent implements OnInit{
   public addressPredictions: any;
   public patientData!: PatientModel;
 
-  companyForm = this.fb.group({
+  patientForm = this.fb.group({
     customer_id: 0,
-    username: [
+    name: [
       '',
       [
         Validators.required,
@@ -93,33 +93,33 @@ export class AddPatientComponent implements OnInit{
   ngOnInit(): void {
     this.getTimeZones();
     this.patientData = history.state.patientData;
-    this.companyForm.patchValue({
-      customer_id: this.patientData.customer_id,
-      username: this.patientData.username,
-      password: this.patientData.password,
-      company_name: this.patientData.company_name,
-      physical_address: this.patientData.physical_address,
-      mailing_address: this.patientData.mailing_address,
-      fax: this.patientData.fax,
-      timezone: this.patientData.timezone,
-      federal_no: this.patientData.federal_no,
-      company_email: this.patientData.company_email,
-      phone: this.patientData.phone,
-      contact_name: this.patientData.contact_name,
-      position: this.patientData.position,
-      contact_phone: this.patientData.contact_phone,
-      contact_email: this.patientData.contact_email,
-      credit_limit: this.patientData.credit_limit,
-      payment_method: this.patientData.payment_method,
-      payment_days: this.patientData.payment_days,
-      payment_terms: this.patientData.payment_terms,
-      notes: this.patientData.notes,
-    });
+    // this.patientForm.patchValue({
+    //   // customer_id: this.patientData.customer_id,
+    //   customer_id: this.patientData.first_name,
+    //   password: this.patientData.password,
+    //   company_name: this.patientData.company_name,
+    //   physical_address: this.patientData.physical_address,
+    //   mailing_address: this.patientData.mailing_address,
+    //   fax: this.patientData.fax,
+    //   timezone: this.patientData.timezone,
+    //   federal_no: this.patientData.federal_no,
+    //   company_email: this.patientData.company_email,
+    //   phone: this.patientData.phone,
+    //   contact_name: this.patientData.contact_name,
+    //   position: this.patientData.position,
+    //   contact_phone: this.patientData.contact_phone,
+    //   contact_email: this.patientData.contact_email,
+    //   credit_limit: this.patientData.credit_limit,
+    //   payment_method: this.patientData.payment_method,
+    //   payment_days: this.patientData.payment_days,
+    //   payment_terms: this.patientData.payment_terms,
+    //   notes: this.patientData.notes,
+    // });
   }
 
   onSubmit(): void {
-    if (this.companyForm.valid) {
-      const formModel: PatientModel = this.companyForm.value as PatientModel;
+    if (this.patientForm.valid) {
+      const formModel: PatientModel = this.patientForm.value as PatientModel;
       const formData = new FormData();
 
       // Convert JSON object to FormData
@@ -162,7 +162,7 @@ export class AddPatientComponent implements OnInit{
   }
 
   public async checkUsernameAvailable(event: Event) {
-    if (!this.companyForm.get('username')?.hasError('email')) {
+    if (!this.patientForm.get('username')?.hasError('email')) {
       const inputElement = event.target as HTMLInputElement;
       let username = inputElement.value;
       try {
@@ -171,7 +171,7 @@ export class AddPatientComponent implements OnInit{
         const isAvailable: boolean =
           await this._authService.checkUsernameAvailable(username);
         this.isUnameAvailable = isAvailable;
-        this.companyForm.get('username')?.updateValueAndValidity();
+        this.patientForm.get('username')?.updateValueAndValidity();
       } catch (err) {
         console.log(err);
       } finally {
@@ -207,16 +207,16 @@ export class AddPatientComponent implements OnInit{
 
     enteredValue = enteredValue.slice(0, 10);
 
-    this.companyForm.patchValue(
+    this.patientForm.patchValue(
       { federal_no: enteredValue },
       { emitEvent: false }
     );
-    this.companyForm.get('federal_no')?.markAsTouched(); // Mark federal_no as touched
+    this.patientForm.get('federal_no')?.markAsTouched(); // Mark federal_no as touched
 
     if (enteredValue.length < 10) {
-      this.companyForm.get('federal_no')?.setErrors({ maxlength: true });
+      this.patientForm.get('federal_no')?.setErrors({ maxlength: true });
     } else {
-      this.companyForm.get('federal_no')?.setErrors(null); // Clear the 'maxlength' error
+      this.patientForm.get('federal_no')?.setErrors(null); // Clear the 'maxlength' error
     }
   }
 
@@ -237,26 +237,26 @@ export class AddPatientComponent implements OnInit{
 
     // Update form control value and validate
     if (field === 'phone')
-      this.companyForm.patchValue(
+      this.patientForm.patchValue(
         { phone: enteredValue },
         { emitEvent: false }
       );
     else if (field === 'fax')
-      this.companyForm.patchValue({ fax: enteredValue }, { emitEvent: false });
+      this.patientForm.patchValue({ fax: enteredValue }, { emitEvent: false });
     else if (field === 'contact_phone')
-      this.companyForm.patchValue(
+      this.patientForm.patchValue(
         { contact_phone: enteredValue },
         { emitEvent: false }
       );
 
-    this.companyForm.get(field)?.markAsTouched(); // Mark phone as touched
+    this.patientForm.get(field)?.markAsTouched(); // Mark phone as touched
   }
 
   public handlePasswordCreation(event: MatRadioChange) {
     if (event.value == 1) {
-      this.companyForm.patchValue({ password: '' });
+      this.patientForm.patchValue({ password: '' });
     } else {
-      this.companyForm.patchValue({ password: this.generateRandomPassword() });
+      this.patientForm.patchValue({ password: this.generateRandomPassword() });
     }
   }
 
@@ -274,11 +274,11 @@ export class AddPatientComponent implements OnInit{
 
   public handleMailingAddress(event: MatCheckboxChange) {
     if (event.checked) {
-      this.companyForm.patchValue({
-        mailing_address: this.companyForm.get('physical_address')?.value,
+      this.patientForm.patchValue({
+        mailing_address: this.patientForm.get('physical_address')?.value,
       });
     } else {
-      this.companyForm.patchValue({ mailing_address: '' });
+      this.patientForm.patchValue({ mailing_address: '' });
     }
   }
 

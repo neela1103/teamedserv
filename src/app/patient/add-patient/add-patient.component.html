@@ -1,11 +1,11 @@
 <div class="spinner-overlay" *ngIf="showSpinner">
   <mat-spinner diameter="50"></mat-spinner>
 </div>
-<form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
   <div class="header-label-container">
     <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
     <span class="title">
-      {{customerData ? 'Edit' : 'Add'}} Customer</span>
+      {{patientData ? 'Edit' : 'Add'}} Patient</span>
   </div>
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">
@@ -22,7 +22,7 @@
               <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </div>
 
-            <mat-error *ngIf="companyForm.get('username')?.hasError('email') && companyForm.get('username')?.touched">
+            <mat-error *ngIf="patientForm.get('username')?.hasError('email') && patientForm.get('username')?.touched">
               Username is invalid
             </mat-error>
             <mat-hint *ngIf="!isUnameAvailable"
@@ -35,7 +35,7 @@
           <mat-form-field class="full-width">
             <mat-label>Password</mat-label>
             <input matInput formControlName="password">
-            <mat-error *ngIf="companyForm.get('password')?.invalid && companyForm.get('password')?.touched">
+            <mat-error *ngIf="patientForm.get('password')?.invalid && patientForm.get('password')?.touched">
               Password is required
             </mat-error>
           </mat-form-field>
@@ -60,7 +60,7 @@
           <mat-form-field class="full-width">
             <mat-label>Company Name</mat-label>
             <input matInput formControlName="company_name">
-            <mat-error *ngIf="companyForm.get('company_name')?.invalid && companyForm.get('company_name')?.touched">
+            <mat-error *ngIf="patientForm.get('company_name')?.invalid && patientForm.get('company_name')?.touched">
               Company Name is required
             </mat-error>
           </mat-form-field>
@@ -69,7 +69,7 @@
           <mat-form-field class="full-width">
             <mat-label>Federal Id/EIN No.</mat-label>
             <input matInput formControlName="federal_no" (input)="handleFederalNo($event)" placeholder="Federal Number">
-            <mat-error *ngIf="companyForm.get('federal_no')?.invalid && companyForm.get('federal_no')?.touched">
+            <mat-error *ngIf="patientForm.get('federal_no')?.invalid && patientForm.get('federal_no')?.touched">
               Federal Id/EIN No. is invalid
             </mat-error>
           </mat-form-field>
@@ -82,7 +82,7 @@
             <!-- <input matInput formControlName="physical_address"> -->
             <textarea matInput formControlName="physical_address"></textarea>
             <mat-error
-              *ngIf="companyForm.get('physical_address')?.invalid && companyForm.get('physical_address')?.touched">
+              *ngIf="patientForm.get('physical_address')?.invalid && patientForm.get('physical_address')?.touched">
               Physical Address is required
             </mat-error>
           </mat-form-field>
@@ -97,7 +97,7 @@
             <!-- <input matInput formControlName="mailing_address"> -->
             <textarea matInput formControlName="mailing_address"></textarea>
             <mat-error
-              *ngIf="companyForm.get('mailing_address')?.invalid && companyForm.get('mailing_address')?.touched">
+              *ngIf="patientForm.get('mailing_address')?.invalid && patientForm.get('mailing_address')?.touched">
               Mailing Address is required
             </mat-error>
           </mat-form-field>
@@ -108,7 +108,7 @@
           <mat-form-field class="full-width">
             <mat-label>Email Id</mat-label>
             <input matInput formControlName="company_email">
-            <mat-error *ngIf="companyForm.get('company_email')?.invalid && companyForm.get('company_email')?.touched">
+            <mat-error *ngIf="patientForm.get('company_email')?.invalid && patientForm.get('company_email')?.touched">
               Email Id is invalid
             </mat-error>
           </mat-form-field>
@@ -118,7 +118,7 @@
             <mat-label>Phone</mat-label>
             <input matInput formControlName="phone" (input)="handleMobileNumber($event,'phone')"
               placeholder="Phone Number">
-            <mat-error *ngIf="companyForm.get('phone')?.invalid && companyForm.get('phone')?.touched">
+            <mat-error *ngIf="patientForm.get('phone')?.invalid && patientForm.get('phone')?.touched">
               Please enter a valid phone number in the format (XXX) XXX-XXXX
             </mat-error>
           </mat-form-field>
@@ -129,7 +129,7 @@
           <mat-form-field class="full-width">
             <mat-label>Fax</mat-label>
             <input matInput formControlName="fax" (input)="handleMobileNumber($event,'fax')">
-            <mat-error *ngIf="companyForm.get('fax')?.invalid && companyForm.get('fax')?.touched">
+            <mat-error *ngIf="patientForm.get('fax')?.invalid && patientForm.get('fax')?.touched">
               Fax is invalid
             </mat-error>
           </mat-form-field>
@@ -138,7 +138,7 @@
           <mat-form-field class="full-width">
             <mat-label>Website</mat-label>
             <input matInput formControlName="website">
-            <mat-error *ngIf="companyForm.get('website')?.invalid && companyForm.get('website')?.touched">
+            <mat-error *ngIf="patientForm.get('website')?.invalid && patientForm.get('website')?.touched">
               Website is required
             </mat-error>
           </mat-form-field>
@@ -153,7 +153,7 @@
               <mat-option *ngFor="let timezone of timezones"
                 value="timezone.timezone">{{timezone.timezone}}</mat-option>
             </mat-select>
-            <mat-error *ngIf="companyForm.get('timezone')?.invalid && companyForm.get('timezone')?.touched">
+            <mat-error *ngIf="patientForm.get('timezone')?.invalid && patientForm.get('timezone')?.touched">
               TimeZone is required
             </mat-error>
           </mat-form-field>
@@ -176,7 +176,7 @@
           <mat-form-field class="full-width">
             <mat-label>Primary Contact Name</mat-label>
             <input matInput formControlName="contact_name">
-            <mat-error *ngIf="companyForm.get('contact_name')?.invalid && companyForm.get('contact_name')?.touched">
+            <mat-error *ngIf="patientForm.get('contact_name')?.invalid && patientForm.get('contact_name')?.touched">
               Primary Contact Name is required
             </mat-error>
           </mat-form-field>
@@ -185,7 +185,7 @@
           <mat-form-field class="full-width">
             <mat-label>Position</mat-label>
             <input matInput formControlName="position">
-            <!-- <mat-error *ngIf="companyForm.get('Position')?.invalid && companyForm.get('Position')?.touched">
+            <!-- <mat-error *ngIf="patientForm.get('Position')?.invalid && patientForm.get('Position')?.touched">
               Password is required
             </mat-error> -->
           </mat-form-field>
@@ -196,7 +196,7 @@
           <mat-form-field class="full-width">
             <mat-label>Phone</mat-label>
             <input matInput formControlName="contact_phone" (input)="handleMobileNumber($event,'contact_phone')">
-            <mat-error *ngIf="companyForm.get('contact_phone')?.invalid && companyForm.get('contact_phone')?.touched">
+            <mat-error *ngIf="patientForm.get('contact_phone')?.invalid && patientForm.get('contact_phone')?.touched">
               Contact Phone is required
             </mat-error>
           </mat-form-field>
@@ -205,7 +205,7 @@
           <mat-form-field class="full-width">
             <mat-label>Email Id</mat-label>
             <input matInput formControlName="contact_email">
-            <mat-error *ngIf="companyForm.get('contact_email')?.invalid && companyForm.get('contact_email')?.touched">
+            <mat-error *ngIf="patientForm.get('contact_email')?.invalid && patientForm.get('contact_email')?.touched">
               Email Id is invalid
             </mat-error>
           </mat-form-field>
