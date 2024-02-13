@@ -111,7 +111,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.CUSTOMER_USER,
         ],
         icon: '',
-        url: '/',
+        url: '/patients',
         subItems: [],
       },
       {
@@ -122,7 +122,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.CUSTOMER_USER,
         ],
         icon: '',
-        url: '/',
+        url: '/patients/add',
         subItems: [],
       },
     ],

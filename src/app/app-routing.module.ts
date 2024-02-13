@@ -37,6 +37,12 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },
+  {
+    path: 'patients',
+    loadChildren: () =>
+      import('./patient/patient.module').then((m) => m.PatientModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

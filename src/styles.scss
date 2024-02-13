@@ -6,39 +6,39 @@
   font-family: 'OpenSans';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/static/OpenSans-Regular.ttf') format('truetype'),
+  src: url('./assets/fonts/static/OpenSans-Regular.ttf') format('ttf'),
     /* Adjust font file path */
-    url('./assets/fonts/static/OpenSans-SemiBold.ttf') format('truetype'),
-    url('./assets/fonts/static/OpenSans-Bold.ttf') format('truetype'),
-    url('./assets/fonts/static/OpenSans-Light.ttf') format('truetype');
+    url('./assets/fonts/static/OpenSans-SemiBold.ttf') format('ttf'),
+    url('./assets/fonts/static/OpenSans-Bold.ttf') format('ttf'),
+    url('./assets/fonts/static/OpenSans-Light.ttf') format('ttf');
 }
 
 @font-face {
   font-family: "OpenSans-Light";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Light.ttf")format('truetype');
+  src: url("./assets/fonts/static/OpenSans-Light.ttf")format('ttf');
 }
 
 @font-face {
   font-family: "OpenSans-Bold";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Bold.ttf")format('truetype');
+  src: url("./assets/fonts/static/OpenSans-Bold.ttf")format('ttf');
 }
 
 @font-face {
   font-family: "OpenSans-Regular";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Regular.ttf")format('truetype');
+  src: url("./assets/fonts/static/OpenSans-Regular.ttf")format('ttf');
 }
 
 @font-face {
   font-family: "OpenSans-SemiBold";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-SemiBold.ttf")format('truetype');
+  src: url("./assets/fonts/static/OpenSans-SemiBold.ttf")format('ttf');
 }
 
 

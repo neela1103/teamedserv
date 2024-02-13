@@ -1,0 +1,287 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      {{customerData ? 'Edit' : 'Add'}} Customer</span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Portal</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Username</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="username" (change)="checkUsernameAvailable($event)">
+              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </div>
+
+            <mat-error *ngIf="companyForm.get('username')?.hasError('email') && companyForm.get('username')?.touched">
+              Username is invalid
+            </mat-error>
+            <mat-hint *ngIf="!isUnameAvailable"
+              class="mat-mdc-form-field-error mat-mdc-form-field-bottom-align ng-tns-c19-25 ng-star-inserted">
+              Username is not available
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password">
+            <mat-error *ngIf="companyForm.get('password')?.invalid && companyForm.get('password')?.touched">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          <mat-radio-group aria-label="Password option" (change)="handlePasswordCreation($event)">
+            <mat-radio-button value="1" checked>Let me create the password</mat-radio-button>
+            <mat-radio-button value="2">Auto-Generated password</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <!-- company -->
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Company Info</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Company Name</mat-label>
+            <input matInput formControlName="company_name">
+            <mat-error *ngIf="companyForm.get('company_name')?.invalid && companyForm.get('company_name')?.touched">
+              Company Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Federal Id/EIN No.</mat-label>
+            <input matInput formControlName="federal_no" (input)="handleFederalNo($event)" placeholder="Federal Number">
+            <mat-error *ngIf="companyForm.get('federal_no')?.invalid && companyForm.get('federal_no')?.touched">
+              Federal Id/EIN No. is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Physical Address</mat-label>
+            <!-- <input matInput formControlName="physical_address"> -->
+            <textarea matInput formControlName="physical_address"></textarea>
+            <mat-error
+              *ngIf="companyForm.get('physical_address')?.invalid && companyForm.get('physical_address')?.touched">
+              Physical Address is required
+            </mat-error>
+          </mat-form-field>
+          <mat-checkbox color="primary" (change)="handleMailingAddress($event)" class="example-margin">Same as Physical
+            Address</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Mailing Address</mat-label>
+            <!-- <input matInput formControlName="mailing_address"> -->
+            <textarea matInput formControlName="mailing_address"></textarea>
+            <mat-error
+              *ngIf="companyForm.get('mailing_address')?.invalid && companyForm.get('mailing_address')?.touched">
+              Mailing Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Email Id</mat-label>
+            <input matInput formControlName="company_email">
+            <mat-error *ngIf="companyForm.get('company_email')?.invalid && companyForm.get('company_email')?.touched">
+              Email Id is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" (input)="handleMobileNumber($event,'phone')"
+              placeholder="Phone Number">
+            <mat-error *ngIf="companyForm.get('phone')?.invalid && companyForm.get('phone')?.touched">
+              Please enter a valid phone number in the format (XXX) XXX-XXXX
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Fax</mat-label>
+            <input matInput formControlName="fax" (input)="handleMobileNumber($event,'fax')">
+            <mat-error *ngIf="companyForm.get('fax')?.invalid && companyForm.get('fax')?.touched">
+              Fax is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Website</mat-label>
+            <input matInput formControlName="website">
+            <mat-error *ngIf="companyForm.get('website')?.invalid && companyForm.get('website')?.touched">
+              Website is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>TimeZone</mat-label>
+            <!-- <input matInput formControlName="timezone"> -->
+            <mat-select formControlName="timezone">
+              <mat-option *ngFor="let timezone of timezones"
+                value="timezone.timezone">{{timezone.timezone}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="companyForm.get('timezone')?.invalid && companyForm.get('timezone')?.touched">
+              TimeZone is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <!-- contact-info -->
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Contact Info</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Primary Contact Name</mat-label>
+            <input matInput formControlName="contact_name">
+            <mat-error *ngIf="companyForm.get('contact_name')?.invalid && companyForm.get('contact_name')?.touched">
+              Primary Contact Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Position</mat-label>
+            <input matInput formControlName="position">
+            <!-- <mat-error *ngIf="companyForm.get('Position')?.invalid && companyForm.get('Position')?.touched">
+              Password is required
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="contact_phone" (input)="handleMobileNumber($event,'contact_phone')">
+            <mat-error *ngIf="companyForm.get('contact_phone')?.invalid && companyForm.get('contact_phone')?.touched">
+              Contact Phone is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Email Id</mat-label>
+            <input matInput formControlName="contact_email">
+            <mat-error *ngIf="companyForm.get('contact_email')?.invalid && companyForm.get('contact_email')?.touched">
+              Email Id is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <!-- payment-info -->
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Contact Info</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Credit Limit</mat-label>
+            <input matInput formControlName="credit_limit">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Payment Method</mat-label>
+            <input matInput formControlName="payment_method">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Payment Days</mat-label>
+            <input matInput formControlName="payment_days">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Payment Terms</mat-label>
+            <input matInput formControlName="payment_terms">
+          </mat-form-field>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="notes"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-card class="shipping-card">
+        <mat-card-header>
+          <mat-card-title>Company Id</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Company Id</mat-label>
+                <input matInput formControlName="company_id">
+              </mat-form-field>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="action-btns">
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+          <button mat-raised-button class="cancel-btn" type="button" (click)="handleCancel()">Cancel</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </mat-card-content>
+  </mat-card>
+</form>
