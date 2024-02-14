@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './shared/authguard/auth.guard';
 import { LoginGuard } from './shared/loginguard/login.guard';
 import { TeamBoardComponent } from './team-board/team-board.component';
+import { ViewMedicalComponent } from './view-medical/view-medical.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,12 @@ const routes: Routes = [
   {
     path: 'team-board',
     component: TeamBoardComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'team-board/medical-team',
+    component: ViewMedicalComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },

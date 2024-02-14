@@ -8,6 +8,8 @@ export class MedicalTeamModel {
   public last_name: string;
   public describe: string;
   public email: string;
+  public photo!: File;
+  public avatar!: string;
   public profession: string;
   public ethnicity: string;
   public languages: string;
@@ -25,6 +27,7 @@ export class MedicalTeamModel {
     this.email = '';
     this.profession = '';
     this.ethnicity = '';
+    this.avatar = '';
     this.languages = '';
     this.county = '';
     this.service_area = '';

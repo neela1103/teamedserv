@@ -63,9 +63,9 @@ export class PatientListComponent {
       state: { id: patientData.id, tabIndex: 0 },
     });
   }
-  handleDeleteCustomer(customerId: any) {
+  handleDeletePatient(patientId: any) {
     let fd = new FormData();
-    fd.append('customer_id', customerId);
+    fd.append('patient_id', patientId);
     this.showSpinner = true;
     this._apiService.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
       (res: any) => {

@@ -64,17 +64,13 @@ export const NavItemsContant: NavLinksModel[] = [
   {
     label: 'Customer/Company',
     roles: [
-      UserTypeConstant.ADMIN,
-      UserTypeConstant.CUSTOMER,
-      UserTypeConstant.CUSTOMER_USER,
+      UserTypeConstant.ADMIN
     ],
     subItems: [
       {
         label: 'All Customer/Company',
         roles: [
-          UserTypeConstant.ADMIN,
-          UserTypeConstant.CUSTOMER,
-          UserTypeConstant.CUSTOMER_USER,
+          UserTypeConstant.ADMIN
         ],
         icon: '',
         url: '/customer',
@@ -83,9 +79,7 @@ export const NavItemsContant: NavLinksModel[] = [
       {
         label: 'Add Customer/Company',
         roles: [
-          UserTypeConstant.ADMIN,
-          UserTypeConstant.CUSTOMER,
-          UserTypeConstant.CUSTOMER_USER,
+          UserTypeConstant.ADMIN
         ],
         icon: '',
         url: '/customer/add',

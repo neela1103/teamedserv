@@ -49,7 +49,7 @@ body {
 
 body {
   margin: 0;
-  font-family: 'OpenSans' !important;
+  // font-family: 'OpenSans' !important;
 }
 
 main {
@@ -270,4 +270,13 @@ mat-card {
 a {
   color: #030384;
   text-decoration: none;
+}
+
+.d-flex-sb {
+  display: flex;
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
 }

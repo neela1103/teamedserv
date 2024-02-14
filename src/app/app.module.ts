@@ -20,16 +20,38 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlaySpinnerComponent } from './shared/loader/overlay-spinner/overlay-spinner.component';
 import { TeamBoardComponent } from './team-board/team-board.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ViewMedicalComponent } from './view-medical/view-medical.component';
+import { AgmCoreModule } from '@agm/core';
+import { PaymentModalComponent } from './payment-modal/payment-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AuthComponent, OverlaySpinnerComponent, TeamBoardComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    AuthComponent,
+    OverlaySpinnerComponent,
+    TeamBoardComponent,
+    ViewMedicalComponent,
+    PaymentModalComponent,
+  ],
   imports: [
     BrowserModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBAztsIXonxMQ3DP70bFYgqClDw1QvCIp4',
+    }),
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
@@ -54,10 +76,29 @@ import { TeamBoardComponent } from './team-board/team-board.component';
     MatPaginatorModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatGridListModule,
+    MatProgressSpinnerModule,
+    MatGridListModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatTabsModule,
+    FlexLayoutModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatDialogModule,
   ],
-  exports:[
-    OverlaySpinnerComponent
-  ],
+  exports: [OverlaySpinnerComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

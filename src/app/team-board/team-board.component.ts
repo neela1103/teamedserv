@@ -7,8 +7,10 @@ import { GoogleService } from '../shared/services/google/google.service';
 import { TeamBoardType } from '../common/constants/AppEnum';
 import { APIConstant } from '../common/constants/APIConstant';
 import { environment } from 'src/environments/environment';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TeamBoardModel } from '../common/models/TeamBoardModel';
+import { MapsAPILoader } from '@agm/core';
+import { TeamBoardMapDataModel } from '../common/models/TeamBoardMapDataModel';
 
 @Component({
   selector: 'app-team-board',
@@ -20,9 +22,22 @@ export class TeamBoardComponent implements OnInit {
   public TeamBoardType = TeamBoardType;
   public fieldData: any;
   public apiKey = environment.googleMapsApiKey;
+  public address = [
+    'Thane, Maharashtra, India',
+    'C2/403, HDIL Residency park Phase 1, Virar West',
+    'New York, NY, USA',
+  ];
+  public mapUrl!: SafeResourceUrl;
+  latitude = 51.678418;
+  longitude = 7.809007;
+  // latitude = 0; // Set your initial latitude
+  // longitude = 0; // Set your initial longitude
+  zoom = 2; // Set the initial zoom level
+  public markers!: TeamBoardMapDataModel[];
+  selectedMarker: TeamBoardMapDataModel | null = null;
 
   teamBoardForm = this.fb.group({
-    board_type: TeamBoardType.TEAM,
+    boardType: TeamBoardType.TEAM,
     language: [],
     county: [],
     profession: [],
@@ -35,35 +50,70 @@ export class TeamBoardComponent implements OnInit {
     private _apiService: ApiService,
     private router: Router,
     private _authService: AuthService,
-    private _googleService: GoogleService
+    private _googleService: GoogleService,
+    private mapsAPILoader: MapsAPILoader
   ) {}
 
   ngOnInit() {
     this.getFieldData();
   }
 
+  geocodeAddresses() {
+    const geocoder = new google.maps.Geocoder();
+    for (const marker of this.markers) {
+      geocoder.geocode(
+        { address: marker.address },
+        (results: any, status: any) => {
+          if (status === 'OK') {
+            const location = results[0].geometry.location;
+            marker.lat = location.lat();
+            marker.lng = location.lng();
+          } else {
+            console.error(
+              'Geocode was not successful for the following reason:',
+              status
+            );
+          }
+        }
+      );
+    }
+  }
+
+  markerMouseOver(marker: TeamBoardMapDataModel) {
+    this.selectedMarker = marker;
+  }
+
+  markerMouseOut() {
+    this.selectedMarker = null;
+  }
+
+  public viewMore(marker: any) {
+    this.router.navigate(['team-board/medical-team'], {
+      state: { medicalId: marker.pid },
+    });
+  }
   public setBoardType(type: TeamBoardType) {
-    if (this.teamBoardForm.get('board_type')?.value !== type) {
-      this.teamBoardForm.patchValue({ board_type: type });
+    if (this.teamBoardForm.get('boardType')?.value !== type) {
+      this.teamBoardForm.patchValue({ boardType: type });
     }
   }
 
   getMapUrl() {
-    // const url = `https://www.google.com/maps/embed/v1/view?key=${this.apiKey}&center=0,0&zoom=15`;
-    // return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    const californiaCenter = '36.7783,-119.4179'; // Latitude, Longitude of California
 
-    const californiaCenter = "36.7783,-119.4179"; // Latitude, Longitude of California
+    const zoomLevel = 6;
 
-  // Specify the zoom level
-  const zoomLevel = 6;
+    // Construct the URL with the specified parameters
+    const baseUrl = `https://www.google.com/maps/embed/v1/view?key=${this.apiKey}`;
+    const queryParams = `&center=${californiaCenter}&zoom=${zoomLevel}`;
+    const url = `${baseUrl}${queryParams}`;
 
-  // Construct the URL with the specified parameters
-  const baseUrl = `https://www.google.com/maps/embed/v1/view?key=${this.apiKey}`;
-  const queryParams = `&center=${californiaCenter}&zoom=${zoomLevel}`;
-  const url = `${baseUrl}${queryParams}`;
+    // Sanitize and return the URL
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
 
-  // Sanitize and return the URL
-  return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  navigateToView() {
+    this.router.navigate(['/team-board/medical-team']);
   }
 
   public getFieldData() {
@@ -85,7 +135,7 @@ export class TeamBoardComponent implements OnInit {
   public onSubmit() {
     if (this.teamBoardForm.valid) {
       const formModel: TeamBoardModel = {
-        board_type: this.teamBoardForm.value.board_type || TeamBoardType.TEAM,
+        boardType: this.teamBoardForm.value.boardType || TeamBoardType.TEAM,
         language: this.teamBoardForm.value.language || [],
         county: this.teamBoardForm.value.county || [],
         profession: this.teamBoardForm.value.profession || [],
@@ -105,7 +155,12 @@ export class TeamBoardComponent implements OnInit {
         .subscribe(
           (res: any) => {
             if (res && res.status) {
-              console.log(res.message);
+              // console.log(res.message);
+              // this.mapUrl = this.getMapUrls(res.data);
+              this.markers = res.data as TeamBoardMapDataModel[];
+              this.mapsAPILoader.load().then(() => {
+                this.geocodeAddresses();
+              });
               this.showSpinner = false;
             } else {
               this.showSpinner = false;
