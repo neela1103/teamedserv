@@ -59,7 +59,7 @@ export class ViewMedicalComponent {
   public medicalProfile: MedicalProfileData[] = [
     {
       label: 'Name',
-      key: 'full_name',
+      key: 'name',
       protect: false,
     },
     {
@@ -79,17 +79,17 @@ export class ViewMedicalComponent {
     },
     {
       label: 'Profession',
-      key: 'profession_name',
+      key: 'profession',
       protect: false,
     },
     {
       label: 'Languages',
-      key: 'language_names',
+      key: 'languages',
       protect: false,
     },
     {
       label: 'Ethnicity',
-      key: 'ethnicity_name',
+      key: 'ethnicity',
       protect: false,
     },
     {
@@ -127,14 +127,14 @@ export class ViewMedicalComponent {
 
   ngOnInit() {
     // this.invokeStripe();
-    let medicalId = history.state.medicalId;
-    if (medicalId) this.fetchMedicalTeamData(medicalId);
-    if (!medicalId) this.router.navigate(['team-board']);
+    this.showSpinner = true;
+    let medicalDetails = history.state.medicalDetails;
+    // if (medicalDetails) this.fetchMedicalTeamData(medicalDetails);
+    if (!medicalDetails) this.router.navigate(['team-board']);
 
-    let userData = this._authService.getUserData();
-    if (userData) {
-      this.protectedView = userData.subscription_status === '1';
-    }
+    this.medicalData = medicalDetails;
+    this.protectedView = medicalDetails?.is_own_team;
+    this.showSpinner = false;
   }
 
   private fetchMedicalTeamData(pid: string) {
@@ -146,6 +146,7 @@ export class ViewMedicalComponent {
         if (res && res.status) {
           console.log(res.message);
           this.medicalData = res.data;
+          this.protectedView = res.data?.is_own_team;
           this.showSpinner = false;
         }
       },

@@ -10,10 +10,10 @@
       <form [formGroup]="teamBoardForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <button mat-raised-button
-            [ngClass]="{'btn-active' : teamBoardForm.get('boardType')?.value === TeamBoardType.TEAM}" type="button"
+            [ngClass]="{'secondary-btn' : teamBoardForm.get('boardType')?.value !== TeamBoardType.TEAM}" type="button"
             (click)="setBoardType(TeamBoardType.TEAM)">Team Board</button>
-          <button mat-raised-button
-            [ngClass]="{'btn-active': teamBoardForm.get('boardType')?.value === TeamBoardType.PROFMED}" type="button"
+          <button mat-raised-button class = "secondary-btn"
+            [ngClass]="{'secondary-btn': teamBoardForm.get('boardType')?.value !== TeamBoardType.PROFMED}" type="button"
             (click)="setBoardType(TeamBoardType.PROFMED)">ProfMed Board</button>
         </div>
         <div class="row" style="margin-top: 20px;">
@@ -63,7 +63,7 @@
         </div>
         <div class="row actions">
           <button mat-raised-button class="btn-active" type="submit">Apply</button>
-          <button mat-raised-button type="button">Reset</button>
+          <button mat-raised-button class="secondary-btn" type="button">Reset</button>
         </div>
       </form>
     </mat-card-title>

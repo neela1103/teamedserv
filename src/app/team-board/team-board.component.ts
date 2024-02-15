@@ -102,12 +102,28 @@ export class TeamBoardComponent implements OnInit {
   private createPopupContent(markerData: any): string {
     return `
       <div>
-        <h3>${markerData.name}</h3>
-        <p>Customer ID: ${markerData.customer_id}</p>
-        <p>Address: ${markerData.address}</p>
-        <p>Profession: ${markerData.profession}</p>
-        <p>Languages: ${markerData.languages}</p>
-        <button id="viewMoreBtn">View More</button>
+        <h3
+        style="line-height: 23px;
+        font-weight: 500;">
+       <span style="color: #005282;">  ${markerData.name} </span> <br>  <span style="color: #828282; font-size:15px"> ${markerData.profession} </span> </h3>
+        <div style="padding-bottom: 5px;">
+        <span style="font-weight: 600;
+        color: black;"> Professional ID: </span>  ${markerData.pid}</div>
+        <div style="padding-bottom: 5px">
+        <span style="font-weight: 600;
+        color: black;">Address: </span> ${markerData.address}</div>
+        <div style="padding-bottom: 5px">
+        <span style="font-weight: 600;
+        color: black;">Languages: </span> ${markerData.languages}</div>
+        <button id="viewMoreBtn" style="    margin-top: 10px;
+        width: 101px;
+        border-radius: 5px;
+        box-shadow: none;
+        background-color: #3c8dbc;
+        color: #ffffff;
+        padding: 4px;
+        border: 1px solid blue;
+        font-size: 13px; cursor:pointer" >View More</button>
         <!-- Add more data as needed -->
       </div>
     `;
@@ -140,7 +156,7 @@ export class TeamBoardComponent implements OnInit {
 
   public viewMore(marker: any) {
     this.router.navigate(['team-board/medical-team'], {
-      state: { medicalId: marker.pid },
+      state: { medicalDetails: marker },
     });
   }
   public setBoardType(type: TeamBoardType) {

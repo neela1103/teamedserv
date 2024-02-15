@@ -5,5 +5,9 @@ SIZE_ERROR_MSG: 'File size exceeds the maximum allowed size',
 PDF_TYPE_ERROR_MSG: 'Only pdf type is allowed',
 JPG_TYPE_ERROR_MSG: 'Only jpg type is allowed',
 
-MEDICAL_DOCUMENTS_URL: 'https://app.profmedservices.com/uploads/registration/'
+MEDICAL_DOCUMENTS_URL: 'https://app.profmedservices.com/uploads/registration/',
+
+
+// default urls
+DEFAULT_IMG: "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
 }

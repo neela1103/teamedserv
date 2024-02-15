@@ -281,3 +281,20 @@ a {
 .align-center {
   align-items: center;
 }
+
+.mat-mdc-raised-button {
+  background-color: #3c8dbc !important;
+  color: #ffffff !important;
+  height: 34px !important;
+  box-shadow: none;
+  border-radius: 7px !important;
+}
+
+.secondary-btn {
+  background: #ffff !important;
+  border: 1px solid #c5c5c5 !important;
+  border-radius: 7px !important;
+  height: 36px !important;
+  box-shadow: none !important;
+  color: black !important;
+}

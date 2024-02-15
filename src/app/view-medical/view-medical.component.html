@@ -36,7 +36,9 @@
           <div class="right-panel">
             <div class="img-container">
               <div class="image">
-                <img [src]="medicalData?.avatar || 'https://app.profmedservices.com/assets/admin/file/documents/profile.jpg' " />
+                <div [ngClass]="{'image-border' : !medicalData?.avatar }">
+                  <img [src]="medicalData?.avatar || appConstants.DEFAULT_IMG " />
+                </div>
               </div>
               <div class="img-name">{{getName()}}</div>
               <div class="container">
@@ -52,4 +54,3 @@
       </mat-grid-list>
     </mat-card-content>
   </mat-card>
-
