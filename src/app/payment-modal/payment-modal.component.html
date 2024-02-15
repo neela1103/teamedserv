@@ -3,18 +3,18 @@
     Payment
   </div>
   <button mat-icon-button (click)="onNoClick()">
-    <mat-icon class="action-mat-icon" aria-label="back">close</mat-icon>
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="onNoClick()" >close</mat-icon>
   </button>
 </div>
 <mat-divider></mat-divider>
 <mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput [(ngModel)]="data.animal">
-  </mat-form-field>
+  @if (elementsOptions.clientSecret) {
+  <ngx-stripe-elements [stripe]="stripe" [elementsOptions]="elementsOptions">
+    <ngx-stripe-payment [options]="paymentElementOptions" />
+  </ngx-stripe-elements>
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="pay()">Pay</button>
 </mat-dialog-actions>

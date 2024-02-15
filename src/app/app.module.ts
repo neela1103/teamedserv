@@ -37,6 +37,7 @@ import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
+import { NgxStripeModule } from 'ngx-stripe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { environment } from 'src/environments/environment';
   ],
   imports: [
     BrowserModule,
+    NgxStripeModule.forRoot(environment.publishableKey),
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyBAztsIXonxMQ3DP70bFYgqClDw1QvCIp4',
     // }),

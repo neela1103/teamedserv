@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  ViewChild,
+  signal,
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
@@ -11,6 +17,12 @@ import { AppConstants } from 'src/app/common/constants/AppConstants';
 import { AuthService } from '../shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
+import { StripeService } from '../shared/services/stripe/stripe.service';
+import { StripePaymentElementComponent, injectStripe } from 'ngx-stripe';
+import {
+  StripeElementsOptions,
+  StripePaymentElementOptions,
+} from '@stripe/stripe-js';
 
 interface MedicalProfileData {
   label: string;
@@ -23,6 +35,9 @@ interface MedicalProfileData {
   styleUrls: ['./view-medical.component.scss'],
 })
 export class ViewMedicalComponent {
+  @ViewChild(StripePaymentElementComponent)
+  paymentElement!: StripePaymentElementComponent;
+
   public medicalData!: MedicalTeamModel;
   public apiKey = environment.googleMapsApiKey;
   public showSpinner: Boolean = false;
@@ -30,6 +45,8 @@ export class ViewMedicalComponent {
   public defaultTabIndex!: number;
   public appConstants = AppConstants;
   public protectedView: boolean = false;
+  stripe = injectStripe(environment.publishableKey);
+  paying = signal(false);
 
   public displayedColumns: string[] = [
     'id',
@@ -43,7 +60,7 @@ export class ViewMedicalComponent {
     {
       label: 'Name',
       key: 'full_name',
-      protect: true,
+      protect: false,
     },
     {
       label: 'Email',
@@ -87,24 +104,14 @@ export class ViewMedicalComponent {
     },
   ];
 
-  public medicalDocuments: any = [
-    {
-      label: 'Resume',
-      key: 'resume',
-    },
-    {
-      label: 'Licence',
-      key: 'licence',
-    },
-  ];
-
   constructor(
     private responsiveObserver: ResponsiveService,
     private _apiService: ApiService,
     private sanitizer: DomSanitizer,
     private router: Router,
     private _authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _stripeService: StripeService
   ) {
     this.responsiveObserver.observeResolution().subscribe((columns) => {
       this.columns = columns;
@@ -119,6 +126,7 @@ export class ViewMedicalComponent {
   ngAfterViewInit() {}
 
   ngOnInit() {
+    // this.invokeStripe();
     let medicalId = history.state.medicalId;
     if (medicalId) this.fetchMedicalTeamData(medicalId);
     if (!medicalId) this.router.navigate(['team-board']);
@@ -189,7 +197,8 @@ export class ViewMedicalComponent {
     const dialogRef = this.dialog.open(PaymentModalComponent, {
       data: { name: 'Deepak', animal: 'Asd' },
       width: '600px', // Set width to 600 pixels
-      height: '400px', // Set height to 400 pixels
+      autoFocus: false,
+      // height: '800px', // Set height to 400 pixels
     });
 
     dialogRef.afterClosed().subscribe((result) => {

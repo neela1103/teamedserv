@@ -36,7 +36,7 @@
           <div class="right-panel">
             <div class="img-container">
               <div class="image">
-                <img [src]="medicalData?.avatar" />
+                <img [src]="medicalData?.avatar || 'https://app.profmedservices.com/assets/admin/file/documents/profile.jpg' " />
               </div>
               <div class="img-name">{{getName()}}</div>
               <div class="container">
@@ -52,3 +52,4 @@
       </mat-grid-list>
     </mat-card-content>
   </mat-card>
+
