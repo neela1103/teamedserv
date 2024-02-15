@@ -72,7 +72,7 @@
     <div>
       <!-- <iframe width="100%" height="450" frameborder="0" style="border:0" allowfullscreen [src]="mapUrl || getMapUrl()">
       </iframe> -->
-      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
         <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
           [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'" (mouseOver)="infoWindow.open()" (markerClick)="infoWindow.open()">
           <agm-info-window [disableAutoPan]="true" #infoWindow>
@@ -84,7 +84,9 @@
             </div>
           </agm-info-window>
         </agm-marker>
-      </agm-map>
+      </agm-map> -->
+      <div id="map" style="height: 400px;"></div>
+
     </div>
   </mat-card-content>
 </mat-card>

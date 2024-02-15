@@ -9,8 +9,7 @@ export class TeamBoardMapDataModel {
   public languages!: string;
   public photo!: string;
   public request_exists!: string;
-  public lat!: number;
-  public lng!: number;
+  public latLng!: number[];
 
   constructor() {
     this.customer_id = 0;
@@ -22,7 +21,6 @@ export class TeamBoardMapDataModel {
     this.profession = '';
     this.photo = '';
     this.request_exists = '';
-    this.lat = 0;
-    this.lng = 0;
+    this.latLng = [0,0]
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ApiService } from '../shared/services/api/api.service';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { GoogleService } from '../shared/services/google/google.service';
 import { TeamBoardType } from '../common/constants/AppEnum';
@@ -9,8 +9,11 @@ import { APIConstant } from '../common/constants/APIConstant';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TeamBoardModel } from '../common/models/TeamBoardModel';
-import { MapsAPILoader } from '@agm/core';
+// import { MapsAPILoader } from '@agm/core';
 import { TeamBoardMapDataModel } from '../common/models/TeamBoardMapDataModel';
+import { Router } from '@angular/router';
+import * as L from 'leaflet';
+import axios from 'axios';
 
 @Component({
   selector: 'app-team-board',
@@ -35,6 +38,8 @@ export class TeamBoardComponent implements OnInit {
   zoom = 2; // Set the initial zoom level
   public markers!: TeamBoardMapDataModel[];
   selectedMarker: TeamBoardMapDataModel | null = null;
+  map: L.Map | undefined;
+  markerGroup = L.layerGroup();
 
   teamBoardForm = this.fb.group({
     boardType: TeamBoardType.TEAM,
@@ -50,41 +55,87 @@ export class TeamBoardComponent implements OnInit {
     private _apiService: ApiService,
     private router: Router,
     private _authService: AuthService,
-    private _googleService: GoogleService,
-    private mapsAPILoader: MapsAPILoader
+    private _googleService: GoogleService // private mapsAPILoader: MapsAPILoader
   ) {}
 
   ngOnInit() {
     this.getFieldData();
+    this.map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+    }).addTo(this.map);
   }
 
-  geocodeAddresses() {
-    const geocoder = new google.maps.Geocoder();
-    for (const marker of this.markers) {
-      geocoder.geocode(
-        { address: marker.address },
-        (results: any, status: any) => {
-          if (status === 'OK') {
-            const location = results[0].geometry.location;
-            marker.lat = location.lat();
-            marker.lng = location.lng();
-          } else {
-            console.error(
-              'Geocode was not successful for the following reason:',
-              status
-            );
-          }
+  private async addMarkersToMap(map: L.Map | undefined): Promise<void> {
+    if (map) {
+      let bounds = L.latLngBounds([]); // Initialize bounds object
+      this.map?.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          this.map?.removeLayer(layer);
         }
-      );
+      });
+
+      for (const markerData of this.markers) {
+        const latLng = await this.getLatLngFromAddress(markerData.address);
+        if (latLng) {
+          bounds.extend(latLng);
+          const marker = L.marker(latLng).addTo(map);
+          marker.bindPopup(this.createPopupContent(markerData));
+          marker.on('mouseover', () => {
+            const popupContent = this.createPopupContent(markerData);
+            const popup = marker.bindPopup(popupContent).openPopup();
+            const viewMoreBtn = document.getElementById('viewMoreBtn');
+            if (viewMoreBtn) {
+              viewMoreBtn.addEventListener('click', () => {
+                this.viewMore(markerData);
+                popup.closePopup(); // Close the popup when redirecting
+              });
+            }
+          });
+        }
+      }
+      map.fitBounds(bounds);
     }
   }
 
-  markerMouseOver(marker: TeamBoardMapDataModel) {
-    this.selectedMarker = marker;
+  private createPopupContent(markerData: any): string {
+    return `
+      <div>
+        <h3>${markerData.name}</h3>
+        <p>Customer ID: ${markerData.customer_id}</p>
+        <p>Address: ${markerData.address}</p>
+        <p>Profession: ${markerData.profession}</p>
+        <p>Languages: ${markerData.languages}</p>
+        <button id="viewMoreBtn">View More</button>
+        <!-- Add more data as needed -->
+      </div>
+    `;
   }
 
-  markerMouseOut() {
-    this.selectedMarker = null;
+  private async getLatLngFromAddress(
+    address: string
+  ): Promise<L.LatLng | null> {
+    try {
+      const response = await axios.get(
+        'https://nominatim.openstreetmap.org/search',
+        {
+          params: {
+            q: address,
+            format: 'json',
+            limit: 1,
+          },
+        }
+      );
+      if (response.data && response.data.length > 0) {
+        const { lat, lon } = response.data[0];
+        return L.latLng(parseFloat(lat), parseFloat(lon));
+      }
+      return null;
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
+      return null;
+    }
   }
 
   public viewMore(marker: any) {
@@ -153,14 +204,16 @@ export class TeamBoardComponent implements OnInit {
       this._apiService
         .post(APIConstant.FILTER_MEDICAL_TEAM, formData)
         .subscribe(
-          (res: any) => {
+          async (res: any) => {
             if (res && res.status) {
               // console.log(res.message);
               // this.mapUrl = this.getMapUrls(res.data);
               this.markers = res.data as TeamBoardMapDataModel[];
-              this.mapsAPILoader.load().then(() => {
-                this.geocodeAddresses();
-              });
+              // this.initMap();
+              await this.addMarkersToMap(this.map);
+              // this.mapsAPILoader.load().then(() => {
+              //   this.geocodeAddresses();
+              // });
               this.showSpinner = false;
             } else {
               this.showSpinner = false;

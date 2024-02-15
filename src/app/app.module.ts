@@ -33,7 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
-import { AgmCoreModule } from '@agm/core';
+// import { AgmCoreModule } from '@agm/core';
 import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
@@ -49,9 +49,9 @@ import { environment } from 'src/environments/environment';
   ],
   imports: [
     BrowserModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBAztsIXonxMQ3DP70bFYgqClDw1QvCIp4',
-    }),
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyBAztsIXonxMQ3DP70bFYgqClDw1QvCIp4',
+    // }),
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
