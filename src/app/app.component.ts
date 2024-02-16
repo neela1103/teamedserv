@@ -44,7 +44,7 @@ import { Router } from '@angular/router';
   ],
 })
 export class AppComponent implements OnInit {
-  public title = 'teamedserv-app';
+  public title = 'ProfMedServices';
   public showSpinner = false;
   public userProfile: any;
 
