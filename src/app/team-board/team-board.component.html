@@ -34,7 +34,7 @@
               <mat-label>County</mat-label>
               <!-- <input matInput formControlName="county"> -->
               <mat-select formControlName="county" multiple>
-                <mat-option *ngFor="let region of fieldData?.region" value="region.rid">{{region.title}}</mat-option>
+                <mat-option *ngFor="let region of fieldData?.region" [value]="region.rid">{{region.title}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -44,7 +44,7 @@
               <div class="uname-input">
                 <mat-select formControlName="service_area" multiple>
                   <mat-option *ngFor="let service of fieldData?.serviceArea"
-                    value="service.said">{{service.service_area_title}}</mat-option>
+                    [value]="service.said">{{service.service_area_title}}</mat-option>
                 </mat-select>
               </div>
             </mat-form-field>
@@ -55,7 +55,7 @@
               <div class="uname-input">
                 <mat-select formControlName="profession" multiple>
                   <mat-option *ngFor="let profession of fieldData?.profession"
-                    value="profession.prid">{{profession.title}}</mat-option>
+                    [value]="profession.prid">{{profession.title}}</mat-option>
                 </mat-select>
               </div>
             </mat-form-field>
@@ -70,21 +70,7 @@
   </mat-card-header>
   <mat-card-content>
     <div>
-      <!-- <iframe width="100%" height="450" frameborder="0" style="border:0" allowfullscreen [src]="mapUrl || getMapUrl()">
-      </iframe> -->
-      <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-        <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
-          [iconUrl]="'http://maps.google.com/mapfiles/ms/icons/red-dot.png'" (mouseOver)="infoWindow.open()" (markerClick)="infoWindow.open()">
-          <agm-info-window [disableAutoPan]="true" #infoWindow>
-            <div>
-              <p><strong>{{ marker.name }}</strong></p>
-              <p>Profession: {{ marker.profession }}</p>
-              <p>Languages: {{ marker.languages }}</p>
-              <button (click)="viewMore(marker)">View More</button>
-            </div>
-          </agm-info-window>
-        </agm-marker>
-      </agm-map> -->
+      <!-- <span *ngIf="isFilterApplied"> {{markers.length}} records found</span> -->
       <div id="map" style="height: 400px;"></div>
 
     </div>

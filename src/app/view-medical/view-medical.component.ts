@@ -5,7 +5,7 @@ import {
   ViewChild,
   signal,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
@@ -47,6 +47,7 @@ export class ViewMedicalComponent {
   public protectedView: boolean = false;
   stripe = injectStripe(environment.publishableKey);
   paying = signal(false);
+  public mapUrl!: SafeResourceUrl;
 
   public displayedColumns: string[] = [
     'id',
@@ -126,7 +127,6 @@ export class ViewMedicalComponent {
   ngAfterViewInit() {}
 
   ngOnInit() {
-    // this.invokeStripe();
     this.showSpinner = true;
     let medicalDetails = history.state.medicalDetails;
     // if (medicalDetails) this.fetchMedicalTeamData(medicalDetails);
@@ -134,6 +134,7 @@ export class ViewMedicalComponent {
 
     this.medicalData = medicalDetails;
     this.protectedView = medicalDetails?.is_own_team;
+    this.getMapUrl(this.medicalData.address);
     this.showSpinner = false;
   }
 
@@ -167,7 +168,7 @@ export class ViewMedicalComponent {
 
   public getMapUrl(address: string | undefined) {
     const url = `https://www.google.com/maps/embed/v1/place?q=${address}&key=${this.apiKey}`;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   public navigateBack() {
@@ -191,12 +192,12 @@ export class ViewMedicalComponent {
     return modifiedString;
   }
   public getName(): string {
-    return this.medicalData['full_name'];
+    return this.medicalData['name'];
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(PaymentModalComponent, {
-      data: { name: 'Deepak', animal: 'Asd' },
+      data: this.medicalData,
       width: '600px', // Set width to 600 pixels
       autoFocus: false,
       // height: '800px', // Set height to 400 pixels

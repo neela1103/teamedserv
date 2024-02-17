@@ -1,4 +1,7 @@
 <div class="d-flex-sb align-center">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
   <div mat-dialog-title>
     Payment
   </div>
@@ -8,11 +11,9 @@
 </div>
 <mat-divider></mat-divider>
 <mat-dialog-content>
-  @if (elementsOptions.clientSecret) {
-  <ngx-stripe-elements [stripe]="stripe" [elementsOptions]="elementsOptions">
+  <ngx-stripe-elements *ngIf="elementsOptions.clientSecret" [stripe]="stripe" [elementsOptions]="elementsOptions">
     <ngx-stripe-payment [options]="paymentElementOptions" />
   </ngx-stripe-elements>
-  }
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>

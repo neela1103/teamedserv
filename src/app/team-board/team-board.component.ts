@@ -40,6 +40,7 @@ export class TeamBoardComponent implements OnInit {
   selectedMarker: TeamBoardMapDataModel | null = null;
   map: L.Map | undefined;
   markerGroup = L.layerGroup();
+  public isFilterApplied:boolean = false;
 
   teamBoardForm = this.fb.group({
     boardType: TeamBoardType.TEAM,
@@ -69,7 +70,10 @@ export class TeamBoardComponent implements OnInit {
 
   private async addMarkersToMap(map: L.Map | undefined): Promise<void> {
     if (map) {
-      let bounds = L.latLngBounds([]); // Initialize bounds object
+      let bounds;
+      if (this.markers.length) {
+        bounds = L.latLngBounds([]); // Initialize bounds object
+      }
       this.map?.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
           this.map?.removeLayer(layer);
@@ -79,7 +83,7 @@ export class TeamBoardComponent implements OnInit {
       for (const markerData of this.markers) {
         const latLng = await this.getLatLngFromAddress(markerData.address);
         if (latLng) {
-          bounds.extend(latLng);
+          bounds?.extend(latLng);
           const marker = L.marker(latLng).addTo(map);
           marker.bindPopup(this.createPopupContent(markerData));
           marker.on('mouseover', () => {
@@ -95,7 +99,8 @@ export class TeamBoardComponent implements OnInit {
           });
         }
       }
-      map.fitBounds(bounds);
+      if(bounds)
+        map.fitBounds(bounds);
     }
   }
 
@@ -222,15 +227,10 @@ export class TeamBoardComponent implements OnInit {
         .subscribe(
           async (res: any) => {
             if (res && res.status) {
-              // console.log(res.message);
-              // this.mapUrl = this.getMapUrls(res.data);
               this.markers = res.data as TeamBoardMapDataModel[];
-              // this.initMap();
               await this.addMarkersToMap(this.map);
-              // this.mapsAPILoader.load().then(() => {
-              //   this.geocodeAddresses();
-              // });
               this.showSpinner = false;
+              this.isFilterApplied = true;
             } else {
               this.showSpinner = false;
               console.log(res.message);
