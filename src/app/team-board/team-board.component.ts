@@ -40,7 +40,7 @@ export class TeamBoardComponent implements OnInit {
   selectedMarker: TeamBoardMapDataModel | null = null;
   map: L.Map | undefined;
   markerGroup = L.layerGroup();
-  public isFilterApplied:boolean = false;
+  public isFilterApplied: boolean = false;
 
   teamBoardForm = this.fb.group({
     boardType: TeamBoardType.TEAM,
@@ -99,8 +99,7 @@ export class TeamBoardComponent implements OnInit {
           });
         }
       }
-      if(bounds)
-        map.fitBounds(bounds);
+      if (bounds) map.fitBounds(bounds);
     }
   }
 
@@ -161,7 +160,7 @@ export class TeamBoardComponent implements OnInit {
 
   public viewMore(marker: any) {
     this.router.navigate(['team-board/medical-team'], {
-      state: { medicalDetails: marker },
+      state: { medicalId: marker.pid },
     });
   }
   public setBoardType(type: TeamBoardType) {

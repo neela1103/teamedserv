@@ -60,7 +60,7 @@ export class ViewMedicalComponent {
   public medicalProfile: MedicalProfileData[] = [
     {
       label: 'Name',
-      key: 'name',
+      key: 'full_name',
       protect: false,
     },
     {
@@ -80,17 +80,17 @@ export class ViewMedicalComponent {
     },
     {
       label: 'Profession',
-      key: 'profession',
+      key: 'profession_name',
       protect: false,
     },
     {
       label: 'Languages',
-      key: 'languages',
+      key: 'language_names',
       protect: false,
     },
     {
       label: 'Ethnicity',
-      key: 'ethnicity',
+      key: 'ethnicity_name',
       protect: false,
     },
     {
@@ -128,14 +128,9 @@ export class ViewMedicalComponent {
 
   ngOnInit() {
     this.showSpinner = true;
-    let medicalDetails = history.state.medicalDetails;
-    // if (medicalDetails) this.fetchMedicalTeamData(medicalDetails);
-    if (!medicalDetails) this.router.navigate(['team-board']);
-
-    this.medicalData = medicalDetails;
-    this.protectedView = medicalDetails?.is_own_team;
-    this.getMapUrl(this.medicalData.address);
-    this.showSpinner = false;
+    let medicalId = history.state.medicalId;
+    if (medicalId) this.fetchMedicalTeamData(medicalId);
+    if (!medicalId) this.router.navigate(['team-board']);
   }
 
   private fetchMedicalTeamData(pid: string) {
@@ -147,7 +142,9 @@ export class ViewMedicalComponent {
         if (res && res.status) {
           console.log(res.message);
           this.medicalData = res.data;
-          this.protectedView = res.data?.is_own_team;
+          this.getMapUrl(this.medicalData.address);
+          this.protectedView =
+            res.data?.is_own_team === '0' && res.data?.request_exists === '0';
           this.showSpinner = false;
         }
       },
@@ -177,7 +174,7 @@ export class ViewMedicalComponent {
 
   public getValue(data: MedicalProfileData): string {
     if (this.medicalData[data.key]) {
-      if (data.protect) {
+      if (data.protect && this.protectedView) {
         return this.protectContent(this.medicalData[data.key]);
       }
       return this.medicalData[data.key];
@@ -192,7 +189,7 @@ export class ViewMedicalComponent {
     return modifiedString;
   }
   public getName(): string {
-    return this.medicalData['name'];
+    return this.medicalData['full_name'];
   }
 
   openDialog(): void {
@@ -204,8 +201,26 @@ export class ViewMedicalComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      // this.animal = result;
+      this.sendInvitation();
     });
+  }
+
+  private sendInvitation() {
+    const fd = new FormData();
+    fd.append('pid', this.medicalData.pid.toString());
+    this.showSpinner = true;
+    this._apiService.post(APIConstant.SEND_INVITATION, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          console.log(res.message);
+          this.showSpinner = false;
+          this.fetchMedicalTeamData(this.medicalData.pid.toString());
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log(error);
+      }
+    );
   }
 }
