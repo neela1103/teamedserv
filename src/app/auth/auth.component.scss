@@ -1,13 +1,36 @@
+
 main {
-  background-color: aliceblue;
+  padding: 0%;
+  margin: 0%;
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
+  // background-size: cover;
+  background-color: #3c8dbc;
+
 }
 
 .container {
-  display: flex;
+  background-repeat: no-repeat;
+  display:flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
   height: 100vh;
+  width: 100%;
+  background-attachment: fixed;
+  background-size: cover;
+
   /* Adjust the height as needed */
+}
+
+.login-img{
+  height: 100vh;
+
+}
+
+.login-logo{
+  height: 4rem;
+  // width: 15rem;
 }
 
 .center-card {
@@ -21,13 +44,13 @@ main {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 300px;
+  max-width: 250px;
   /* Adjust the maximum width as needed */
   margin: auto;
 }
 
 .login-button {
-  width: 100%;
+  width: 50%;
   margin-top: 16px;
 }
 
@@ -37,13 +60,16 @@ mat-form-field {
 
 .mat-mdc-card-header {
   justify-content: center;
-  background-color: #296385;
+  background-color: aliceblue;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
 
 mat-card-content {
-  padding: 40px 0;
+  padding: 30px 0;
+}
+mat-card-title{
+padding: 5px;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
