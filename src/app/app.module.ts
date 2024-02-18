@@ -37,8 +37,8 @@ import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
-import { NgxStripeModule } from 'ngx-stripe';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
+import { NgxStripeModule } from 'ngx-stripe';
 @NgModule({
   declarations: [
     AppComponent,
