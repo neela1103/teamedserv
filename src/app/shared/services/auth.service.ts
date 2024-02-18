@@ -18,6 +18,7 @@ import { APIConstant } from 'src/app/common/constants/APIConstant';
   providedIn: 'root',
 })
 export class AuthService {
+  public showHeader: boolean = true;
   private _transformer = (node: NavLinksModel, level: number) => {
     return {
       expandable: !!node.subItems && node.subItems.length > 0,
@@ -121,7 +122,7 @@ export class AuthService {
     const url = `${this.baseUrl}/${APIConstant.IS_USERNAME_AVAILABLE}`;
     const httpOptions = {
       headers: new HttpHeaders({
-        'Token': `Bearer ${this.userProfile.token}`,
+        Token: `Bearer ${this.userProfile.token}`,
       }),
     };
     return this.http.post(url, userName, httpOptions).pipe(
@@ -132,7 +133,7 @@ export class AuthService {
     );
   }
 
-  public async checkUsernameAvailable(username: string):  Promise<boolean> {
+  public async checkUsernameAvailable(username: string): Promise<boolean> {
     // this.isUnameAvailable = !this.isUnameAvailable
     let fd = new FormData();
     fd.append('username', username);
@@ -147,5 +148,8 @@ export class AuthService {
         }
       );
     });
+  }
+  public hideHeader() {
+    this.showHeader = false;
   }
 }

@@ -6,6 +6,7 @@ import { AuthGuard } from './shared/authguard/auth.guard';
 import { LoginGuard } from './shared/loginguard/login.guard';
 import { TeamBoardComponent } from './team-board/team-board.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
+import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./patient/patient.module').then((m) => m.PatientModule),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'team-invitation',
+    component: TeamInvitationComponent,
+    pathMatch: 'full',
   },
 ];
 

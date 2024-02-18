@@ -19,7 +19,7 @@ import {
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { AuthService } from './shared/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -47,6 +47,8 @@ export class AppComponent implements OnInit {
   public title = 'ProfMedServices';
   public showSpinner = false;
   public userProfile: any;
+  public isInvitationPage: boolean = false;
+  public rid!: number;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -58,15 +60,24 @@ export class AppComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      const type = params['type'];
+      this.rid = params['rid'];
+      console.log(type);
+      if (type && type === 'invitation') this.isInvitationPage = true;
+    });
+  }
 
   public handleLogOut() {
     this.authService.logout();
   }
   public checkIsValid() {
+    if (this.isInvitationPage) return true;
     this.userProfile = this.authService.getUserData();
     return !!this.userProfile && Object.keys(this.userProfile).length !== 0; // Assuming userData exists if the user is logged in
   }

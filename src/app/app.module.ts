@@ -38,6 +38,7 @@ import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { NgxStripeModule } from 'ngx-stripe';
+import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     TeamBoardComponent,
     ViewMedicalComponent,
     PaymentModalComponent,
+    TeamInvitationComponent
   ],
   imports: [
     BrowserModule,
