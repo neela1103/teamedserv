@@ -1,4 +1,3 @@
-
 main {
   padding: 0%;
   margin: 0%;
@@ -9,9 +8,13 @@ main {
 
 }
 
+.container-bg {
+  background-image: url('/assets/images/login-bg.jpg');
+}
+
 .container {
   background-repeat: no-repeat;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -23,12 +26,12 @@ main {
   /* Adjust the height as needed */
 }
 
-.login-img{
+.login-img {
   height: 100vh;
 
 }
 
-.login-logo{
+.login-logo {
   height: 4rem;
   // width: 15rem;
 }
@@ -68,8 +71,9 @@ mat-form-field {
 mat-card-content {
   padding: 30px 0;
 }
-mat-card-title{
-padding: 5px;
+
+mat-card-title {
+  padding: 5px;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
@@ -100,19 +104,23 @@ padding: 5px;
   align-items: flex-start;
   text-decoration: none;
 
-  mat-icon{
+  mat-icon {
     font-size: 16px;
   }
 }
 
 .spinner-border {
   display: inline-block;
-  width: 1.25rem; /* Adjust size as needed */
-  height: 1.25rem; /* Adjust size as needed */
+  width: 1.25rem;
+  /* Adjust size as needed */
+  height: 1.25rem;
+  /* Adjust size as needed */
   vertical-align: text-bottom;
-  border: 3px solid rgba(0, 0, 0, 0.1); /* Spinner border color */
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  /* Spinner border color */
   border-radius: 50%;
-  border-top-color: #fff; /* Spinner color */
+  border-top-color: #fff;
+  /* Spinner color */
   animation: spinner-border 0.75s linear infinite;
 }
 
