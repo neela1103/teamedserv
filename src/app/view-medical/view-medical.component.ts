@@ -208,6 +208,7 @@ export class ViewMedicalComponent {
   private sendInvitation() {
     const fd = new FormData();
     fd.append('pid', this.medicalData.pid.toString());
+    fd.append('sendEmail', "1");
     this.showSpinner = true;
     this._apiService.post(APIConstant.SEND_INVITATION, fd).subscribe(
       (res: any) => {

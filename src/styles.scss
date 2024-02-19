@@ -298,3 +298,26 @@ a {
   box-shadow: none !important;
   color: black !important;
 }
+
+ .mat-mdc-text-field-wrapper  {
+  // border: 1px solid red !important;
+  height: 52px !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #fff !important;
+}
+
+// .mdc-text-field--filled :hover {
+//   background-color: #fff !important;
+// }
+
+//  .mat-mdc-input-element  {
+//   background-color: #fff !important;
+// }
+//  .mat-mdc-input-element:focus  {
+//   background-color: #fff !important;
+// }
+
+
+

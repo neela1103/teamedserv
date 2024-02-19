@@ -15,6 +15,8 @@ export enum APIConstant {
   GET_MEDICAL_FIELD_DATA = 'getProfessionalFieldData',
   GET_MEDICALTEAM_BY_ID = 'medical/get-medical-team-by-id',
   SEND_INVITATION = 'medical/invite-medical-team',
+  VERIFY_INVITATION = 'medical-team/verify-token',
+  ACCEPT_INVITATION = 'medical/change-invitation-status',
 
   // users
   GET_USERS = 'users',

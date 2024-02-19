@@ -8,3 +8,9 @@ export enum FileType {
   LICENCE = 'licence',
   RESUME = 'resume',
 }
+
+export enum StatusCode {
+  NOT_FOUND = 404,
+  EXPIRED = 402,
+  OK = 200,
+}
