@@ -2,8 +2,8 @@
   <mat-sidenav-container class="sidenav-container" *ngIf="authService.showHeader">
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-      <mat-toolbar>
-        <img src="/assets/images/profmed-login-logo.jpg" height="50px" width="100%">
+      <mat-toolbar class="toolbar">
+        <img src="/assets/images/profmed-login-logo.png" height="50px">
       </mat-toolbar>
       <mat-nav-list>
         <span class="pl-2">NAVIGATION</span>

@@ -4,6 +4,11 @@
 
 mat-sidenav {
   background-color: #36404e;
+
+  .toolbar {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .sidenav {
