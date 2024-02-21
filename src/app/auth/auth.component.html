@@ -1,6 +1,33 @@
 <main>
   <div class="container">
-    <div class="container">
+    <div class="register-container">
+      <div class="register-card">
+        <div class="register-title" style="padding-top: 15px;">
+          <h1>
+            If you are Health Care Professionals,<br> join us by registering your self.
+          </h1>
+          <div>
+            <button mat-raised-button color="primary"> Register Now</button>
+          </div>
+          <div class="demo-text">
+            <h2>
+              If you are a company, get a demo here.
+            </h2>
+            <div>
+              <button mat-raised-button color="primary"> Get Free Demo</button>
+            </div>
+          </div>
+          <div class="download-container">
+            <div class="download">Download Mobile Apps</div>
+            <div class="app-logo">
+              <img src="/assets/images/google-play.png" height="150px" />
+              <img src="/assets/images/app-store.png" height="150px" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
       <mat-card class="center-card">
         <mat-card-header>
           <mat-card-title>
@@ -39,11 +66,8 @@
               <span *ngIf="!isLoggingIn">Login</span>
             </button>
           </form>
-
-
         </mat-card-content>
       </mat-card>
     </div>
-
   </div>
 </main>

@@ -9,10 +9,62 @@ main {
 
 .container {
   display: flex;
-  justify-content: center;
+  // justify-content: space-around;
   align-items: center;
   height: 100vh;
+  gap: 30px;
+  padding: 0 75px;
   /* Adjust the height as needed */
+}
+
+// .login-container {
+//   display: flex;
+//   justify-content: space-between;
+// }
+.register-container {
+  width: 55%;
+  padding-top: 50px;
+
+  .register-card {
+
+    .register-title {
+      h1 {
+        color: #0C122D;
+        font-size: 35px;
+        line-height: 40px;
+      }
+
+      .demo-text {
+        h2 {
+          color: #0C122D;
+          font-size: 25px;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+}
+
+.demo-text {
+  padding-top: 15px;
+}
+
+.download-container {
+  display: grid;
+
+  .download {
+    padding-top: 25px;
+    font-size: 18px;
+    font-weight: 500;
+    justify-content: center;
+    display: flex;
+  }
+
+  .app-logo {
+    display: flex;
+    justify-self: center;
+    gap: 10px;
+  }
 }
 
 .center-card {
@@ -41,7 +93,7 @@ mat-form-field {
   width: 100%;
 }
 
-.mat-mdc-card-header {
+.center-card .mat-mdc-card-header {
   justify-content: center;
   background-color: aliceblue;
   border-top-right-radius: 10px;
@@ -107,8 +159,9 @@ mat-card-content {
     transform: rotate(360deg);
   }
 }
+
 ::ng-deep input:-internal-autofill-selected {
-background-image: none !important;
-    background-color: rgb(255, 255, 255) !important;
-    color: black !important;
+  background-image: none !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: black !important;
 }
