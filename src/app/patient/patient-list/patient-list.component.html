@@ -36,8 +36,7 @@
           <!-- Email/Phone No Column -->
           <ng-container matColumnDef="Phone No">
             <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Phone No </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> <span
-                [matTooltip]="element.email">{{element.email}}</span> <br> {{element.mobile}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.mobile}} </td>
           </ng-container>
 
           <!-- Action Column -->
