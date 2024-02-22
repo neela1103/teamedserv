@@ -3,16 +3,31 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserAuthModel } from '../common/models/UserAuthModel';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
+  animations: [
+    trigger('hoverAnimation', [
+      state('start', style({
+        width: '2em',
+        left: 'calc(100% - 1.45em)'
+      })),
+      state('end', style({
+        width: 'calc(100% + 1.3em)'
+      })),
+      transition('start <=> end', animate('0.6s ease'))
+    ])
+  ]
 })
 export class AuthComponent implements OnInit {
   loginForm!: FormGroup;
   hide = true;
   isLoggingIn = false;
+  hoverState = 'start';
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -24,6 +39,9 @@ export class AuthComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+  }
+  toggleAnimation() {
+    this.hoverState = this.hoverState === 'start' ? 'end' : 'start';
   }
   login() {
     if (this.loginForm.valid) {
