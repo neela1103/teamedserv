@@ -17,10 +17,12 @@ main {
   /* Adjust the height as needed */
 }
 
+
 @media screen and (max-width: 900px) {
   .container {
     flex-direction: column-reverse;
     height: 100%;
+    padding: 0;
   }
 }
 
@@ -169,6 +171,12 @@ main {
     display: flex;
     // justify-self: center;
     gap: 10px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .app-logo {
+      flex-direction: column;
+    }
   }
 }
 

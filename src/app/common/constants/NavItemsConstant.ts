@@ -26,6 +26,27 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/team-board',
   },
   {
+    label: 'Ambulance',
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    subItems: [],
+    icon: 'local_car_wash',
+    url: '/team-board',
+  },
+  {
+    label: 'Living ##',
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    subItems: [],
+    icon: 'home',
+    url: '/team-board',
+  },
+  {
+    label: 'Job-Portal ##',
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    subItems: [],
+    icon: 'work',
+    url: '/team-board',
+  },
+  {
     label: 'Medical Team',
     roles: [
       UserTypeConstant.ADMIN,
@@ -63,24 +84,18 @@ export const NavItemsContant: NavLinksModel[] = [
   },
   {
     label: 'Customer/Company',
-    roles: [
-      UserTypeConstant.ADMIN
-    ],
+    roles: [UserTypeConstant.ADMIN],
     subItems: [
       {
         label: 'All Customer/Company',
-        roles: [
-          UserTypeConstant.ADMIN
-        ],
+        roles: [UserTypeConstant.ADMIN],
         icon: '',
         url: '/customer',
         subItems: [],
       },
       {
         label: 'Add Customer/Company',
-        roles: [
-          UserTypeConstant.ADMIN
-        ],
+        roles: [UserTypeConstant.ADMIN],
         icon: '',
         url: '/customer/add',
         subItems: [],
@@ -109,7 +124,7 @@ export const NavItemsContant: NavLinksModel[] = [
         subItems: [],
       },
       {
-        label: 'Add Patient',
+        label: 'Add Patient #',
         roles: [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
@@ -124,7 +139,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Assignment/Services',
+    label: 'Assignment/Services #',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
@@ -132,7 +147,7 @@ export const NavItemsContant: NavLinksModel[] = [
     ],
     subItems: [
       {
-        label: 'All Assignment/Services',
+        label: 'All Assignment/Services #',
         roles: [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
@@ -143,7 +158,7 @@ export const NavItemsContant: NavLinksModel[] = [
         subItems: [],
       },
       {
-        label: 'Add Assignment/Services',
+        label: 'Add Assignment/Services #',
         roles: [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
@@ -158,7 +173,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Manage Activities',
+    label: 'Manage Activities #',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,

@@ -1,56 +1,72 @@
+@use '@angular/material'as mat;
 /* You can add global styles to this file, and also import other style files */
 @import '~@mdi/font/css/materialdesignicons.min.css';
 @import "~leaflet/dist/leaflet.css";
 
+
+
 /* styles.css or custom CSS file */
 @font-face {
-  font-family: 'OpenSans';
+  font-family: 'HindMadurai';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/static/OpenSans-Regular.ttf') format('ttf'),
+  src: url('./assets/fonts/HindMadurai-Regular.ttf') format('truetype'),
     /* Adjust font file path */
-    url('./assets/fonts/static/OpenSans-SemiBold.ttf') format('ttf'),
-    url('./assets/fonts/static/OpenSans-Bold.ttf') format('ttf'),
-    url('./assets/fonts/static/OpenSans-Light.ttf') format('ttf');
+    url('./assets/fonts/HindMadurai-SemiBold.ttf') format('truetype'),
+    url('./assets/fonts/HindMadurai-Bold.ttf') format('truetype'),
+    url('./assets/fonts/HindMadurai-Light.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "OpenSans-Light";
+  font-family: "HindMadurai-Light";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Light.ttf")format('ttf');
+  src: url("./assets/fonts/HindMadurai-Light.ttf")format('truetype');
 }
 
 @font-face {
-  font-family: "OpenSans-Bold";
+  font-family: "HindMadurai-Bold";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Bold.ttf")format('ttf');
+  src: url("./assets/fonts/HindMadurai-Bold.ttf")format('truetype');
 }
 
 @font-face {
-  font-family: "OpenSans-Regular";
+  font-family: "HindMadurai-Regular";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-Regular.ttf")format('ttf');
+  src: url("./assets/fonts/HindMadurai-Regular.ttf")format('truetype');
 }
 
 @font-face {
-  font-family: "OpenSans-SemiBold";
+  font-family: "HindMadurai-SemiBold";
   font-style: normal;
   font-display: auto;
-  src: url("./assets/fonts/static/OpenSans-SemiBold.ttf")format('ttf');
+  src: url("./assets/fonts/HindMadurai-SemiBold.ttf")format('truetype');
 }
 
+$my-custom-level: mat.define-typography-level($font-family: 'HindMadurai',
+  $font-weight: 400,
+  $font-size: 1rem,
+  $line-height: 1,
+  $letter-spacing: normal,
+);
 
 html,
 body {
   height: 100%;
-}
-
-body {
   margin: 0;
-  // font-family: 'OpenSans' !important;
+  font-family: 'Hind Madurai', sans-serif !important;
+}
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Hind Madurai', sans-serif !important; // Override with Hind Madurai font
 }
 
 main {
@@ -110,7 +126,7 @@ form {
     font-size: 20px;
     font-weight: 500;
     line-height: 32px;
-    font-family: Roboto, sans-serif;
+    font-family: 'HindMadurai-SemiBold';
     letter-spacing: .0125em;
   }
 }
@@ -168,7 +184,7 @@ mat-card {
   font-size: 20px;
   font-weight: 500;
   line-height: 32px;
-  font-family: Roboto, sans-serif;
+  font-family: 'HindMadurai-SemiBold';
   letter-spacing: .0125em;
 }
 
@@ -215,13 +231,14 @@ mat-card {
 .help-text {
   font-size: 12px;
   color: #444;
+  font-family: 'HindMadurai-Regular';
 }
 
 .error-text {
   color: red;
   font-size: 12px;
   line-height: 16px;
-  /* font-family: 'OpenSans-SemiBold'; */
+  /* font-family: 'HindMadurai-SemiBold'; */
   text-align: end;
   display: block;
 }
