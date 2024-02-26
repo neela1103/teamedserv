@@ -102,10 +102,10 @@ export class AuthService {
   }
 
   logout(): void {
+    window.location.reload();
     this.isLoggedIn = false;
     sessionStorage.clear();
-    console.log(sessionStorage.getItem('userData'));
-    this.router.navigate(['/auth']);
+    // this.router.navigate(['/auth']);
   }
 
   isAuthenticated(): boolean {

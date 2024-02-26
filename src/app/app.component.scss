@@ -137,7 +137,7 @@ mat-tree-node {
   display: flex;
 
   button {
-    position: absolute;
+    // position: absolute;
     right: 0;
   }
 
@@ -183,6 +183,19 @@ mat-tree-node {
   z-index: 9999; /* Ensure the spinner is on top of other elements */
 }
 
-.content {
-  /* Add your styles for content here */
+.item-label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-drawer-inner-container::-webkit-scrollbar {
+  width: 4px;
+  overflow-y: scroll;
+  background: grey;
+  box-shadow: inset 0 0 4px #707070;
+}
+
+::ng-deep .mat-drawer-inner-container::-webkit-scrollbar-thumb {
+  // border-radius: 10px;
 }

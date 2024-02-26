@@ -8,7 +8,8 @@
       <mat-nav-list>
         <span class="pl-2">NAVIGATION</span>
         <mat-tree [dataSource]="authService.dataSource" [treeControl]="authService.treeControl">
-          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)" (click)="onNodeClicked(node)">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)"
+            (click)="onNodeClicked(node)">
             <button mat-icon-button disabled></button>
             <div class="icon-label-container">
               <mat-icon>{{node.icon}}</mat-icon>
@@ -18,15 +19,17 @@
 
           <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: authService.hasChild"
             matTreeNodePadding (click)="authService.toggleNode(node)">
-            <div class="icon-label-container">
-              <mat-icon>{{node.icon}}</mat-icon>
-              <span>{{ node.label }}</span>
+            <div class="item-label">
+              <div class="icon-label-container">
+                <mat-icon>{{node.icon}}</mat-icon>
+                <span>{{ node.label }}</span>
+              </div>
+              <button mat-icon-button [attr.aria-label]="'Toggle ' + node.label">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{authService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
             </div>
-            <button mat-icon-button [attr.aria-label]="'Toggle ' + node.label">
-              <mat-icon class="mat-icon-rtl-mirror">
-                {{authService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-              </mat-icon>
-            </button>
 
           </mat-tree-node>
         </mat-tree>

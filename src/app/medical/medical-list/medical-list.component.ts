@@ -68,10 +68,11 @@ export class MedicalListComponent implements OnInit {
     });
   }
   handleDeleteCustomer(customerId: any) {
+    return;
     let fd = new FormData();
     fd.append('customer_id', customerId);
     this.showSpinner = true;
-    this._apiService.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
+    this._apiService.post(APIConstant.DELETE_MEDICALTEAM, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.showSpinner = false;
@@ -93,5 +94,4 @@ export class MedicalListComponent implements OnInit {
     if (values?.length > 2) return values?.splice(0, 2)?.join(',');
     return value;
   }
-
 }

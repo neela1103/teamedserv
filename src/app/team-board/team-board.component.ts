@@ -70,36 +70,40 @@ export class TeamBoardComponent implements OnInit {
 
   private async addMarkersToMap(map: L.Map | undefined): Promise<void> {
     if (map) {
-      let bounds;
-      if (this.markers.length) {
-        bounds = L.latLngBounds([]); // Initialize bounds object
-      }
-      this.map?.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
-          this.map?.removeLayer(layer);
+      try {
+        let bounds;
+        if (this.markers.length) {
+          bounds = L.latLngBounds([]); // Initialize bounds object
         }
-      });
+        this.map?.eachLayer((layer) => {
+          if (layer instanceof L.Marker) {
+            this.map?.removeLayer(layer);
+          }
+        });
 
-      for (const markerData of this.markers) {
-        const latLng = await this.getLatLngFromAddress(markerData.address);
-        if (latLng) {
-          bounds?.extend(latLng);
-          const marker = L.marker(latLng).addTo(map);
-          marker.bindPopup(this.createPopupContent(markerData));
-          marker.on('mouseover', () => {
-            const popupContent = this.createPopupContent(markerData);
-            const popup = marker.bindPopup(popupContent).openPopup();
-            const viewMoreBtn = document.getElementById('viewMoreBtn');
-            if (viewMoreBtn) {
-              viewMoreBtn.addEventListener('click', () => {
-                this.viewMore(markerData);
-                popup.closePopup(); // Close the popup when redirecting
-              });
-            }
-          });
+        for (const markerData of this.markers) {
+          const latLng = await this.getLatLngFromAddress(markerData.address);
+          if (latLng) {
+            bounds?.extend(latLng);
+            const marker = L.marker(latLng).addTo(map);
+            marker.bindPopup(this.createPopupContent(markerData));
+            marker.on('mouseover', () => {
+              const popupContent = this.createPopupContent(markerData);
+              const popup = marker.bindPopup(popupContent).openPopup();
+              const viewMoreBtn = document.getElementById('viewMoreBtn');
+              if (viewMoreBtn) {
+                viewMoreBtn.addEventListener('click', () => {
+                  this.viewMore(markerData);
+                  popup.closePopup(); // Close the popup when redirecting
+                });
+              }
+            });
+          }
         }
+        if (bounds) map.fitBounds(bounds);
+      } catch (err) {
+        console.log(err);
       }
-      if (bounds) map.fitBounds(bounds);
     }
   }
 
