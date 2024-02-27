@@ -12,6 +12,7 @@ export enum APIConstant {
   ADD_MEDICALTEAM = 'medical-team/add',
   DELETE_MEDICALTEAM = 'medical-team/delete',
   EDIT_MEDICALTEAM = 'medical-team/edit',
+  APPROVE_MEDICALTEAM = 'medical-team/approve',
   GET_MEDICAL_FIELD_DATA = 'getProfessionalFieldData',
   GET_MEDICALTEAM_BY_ID = 'medical/get-medical-team-by-id',
   SEND_INVITATION = 'medical/invite-medical-team',

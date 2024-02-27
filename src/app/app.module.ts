@@ -39,6 +39,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
 import { NgxStripeModule } from 'ngx-stripe';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -101,6 +103,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatDialogModule,
+    MatAutocompleteModule
   ],
   exports: [OverlaySpinnerComponent],
   providers: [],

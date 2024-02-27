@@ -33,6 +33,39 @@
 
           </mat-tree-node>
         </mat-tree>
+        <!-- search directory group -->
+        <div class="section-title">
+          <div class="line"></div>
+          <div>
+            Search
+          </div>
+          <div class="line"></div>
+        </div>
+        <mat-tree [dataSource]="authService.dataSource1" [treeControl]="authService.treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)"
+            (click)="onNodeClicked(node)">
+            <button mat-icon-button disabled></button>
+            <div class="icon-label-container">
+              <mat-icon>{{node.icon}}</mat-icon>
+              <span>{{ node.label }}</span>
+            </div>
+          </mat-tree-node>
+          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: authService.hasChild"
+            matTreeNodePadding (click)="authService.toggleNode(node)">
+            <div class="item-label">
+              <div class="icon-label-container">
+                <mat-icon>{{node.icon}}</mat-icon>
+                <span>{{ node.label }}</span>
+              </div>
+              <button mat-icon-button [attr.aria-label]="'Toggle ' + node.label">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{authService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+            </div>
+
+          </mat-tree-node>
+        </mat-tree>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

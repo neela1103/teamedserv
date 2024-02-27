@@ -94,4 +94,21 @@ export class MedicalListComponent implements OnInit {
     if (values?.length > 2) return values?.splice(0, 2)?.join(',');
     return value;
   }
+
+  public approveMedicalTeam(pid: number) {
+    const fd = new FormData();
+    fd.append('pid', pid.toString());
+    this.showSpinner = true;
+    this._apiService.post(APIConstant.APPROVE_MEDICALTEAM, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.fetchMedicalTeams();
+        }
+        this.showSpinner = false;
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
+  }
 }

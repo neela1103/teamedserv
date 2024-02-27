@@ -44,6 +44,8 @@ export class AuthService {
   );
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  dataSource1 = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
   currentlyExpandedNode: NavItemNode | null = null;
 
   hasChild = (_: number, node: NavItemNode) => node.expandable;
@@ -110,8 +112,12 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     this.userProfile = this.getUserData();
-    this.dataSource.data = NavItemsContant.filter((navItems) =>
+    let navItems = NavItemsContant.filter((navItems) =>
       navItems.roles.includes(this.userProfile.user_type)
+    );
+    this.dataSource.data = navItems.filter((item) => item.category === '');
+    this.dataSource1.data = navItems.filter(
+      (item) => item.category === 'directory'
     );
     if (this.userProfile) this.isLoggedIn = true;
     else this.isLoggedIn = false;

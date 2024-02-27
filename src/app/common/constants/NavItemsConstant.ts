@@ -10,40 +10,9 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.CUSTOMER_USER,
       UserTypeConstant.PROFESSIONAL,
     ],
+    category: '',
     subItems: [],
     icon: 'home',
-    url: '/',
-  },
-  {
-    label: 'Team Board',
-    roles: [
-      UserTypeConstant.ADMIN,
-      UserTypeConstant.CUSTOMER,
-      UserTypeConstant.CUSTOMER_USER,
-    ],
-    subItems: [],
-    icon: 'group',
-    url: '/team-board',
-  },
-  {
-    label: 'Ambulance ##',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
-    subItems: [],
-    icon: 'local_car_wash',
-    url: '/',
-  },
-  {
-    label: 'Living ##',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
-    subItems: [],
-    icon: 'home',
-    url: '/',
-  },
-  {
-    label: 'Job-Portal ##',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
-    subItems: [],
-    icon: 'work',
     url: '/',
   },
   {
@@ -54,6 +23,7 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.PROFESSIONAL,
     ],
+    category: '',
     subItems: [
       {
         label: 'All Medical Team',
@@ -65,6 +35,7 @@ export const NavItemsContant: NavLinksModel[] = [
         ],
         icon: '',
         url: 'medical-team',
+        category: '',
         subItems: [],
       },
       {
@@ -76,6 +47,7 @@ export const NavItemsContant: NavLinksModel[] = [
         ],
         icon: '',
         url: '/medical-team/add',
+        category: '',
         subItems: [],
       },
     ],
@@ -85,12 +57,14 @@ export const NavItemsContant: NavLinksModel[] = [
   {
     label: 'Customer/Company',
     roles: [UserTypeConstant.ADMIN],
+    category: '',
     subItems: [
       {
         label: 'All Customer/Company',
         roles: [UserTypeConstant.ADMIN],
         icon: '',
         url: '/customer',
+        category: '',
         subItems: [],
       },
       {
@@ -98,6 +72,7 @@ export const NavItemsContant: NavLinksModel[] = [
         roles: [UserTypeConstant.ADMIN],
         icon: '',
         url: '/customer/add',
+        category: '',
         subItems: [],
       },
     ],
@@ -111,6 +86,7 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.CUSTOMER_USER,
     ],
+    category: '',
     subItems: [
       {
         label: 'All Patient',
@@ -121,6 +97,7 @@ export const NavItemsContant: NavLinksModel[] = [
         ],
         icon: '',
         url: '/patients',
+        category: '',
         subItems: [],
       },
       {
@@ -132,6 +109,7 @@ export const NavItemsContant: NavLinksModel[] = [
         ],
         icon: '',
         url: '/patients/add',
+        category: '',
         subItems: [],
       },
     ],
@@ -145,6 +123,7 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.CUSTOMER_USER,
     ],
+    category: '',
     subItems: [
       {
         label: 'All Assignment/Services #',
@@ -155,6 +134,7 @@ export const NavItemsContant: NavLinksModel[] = [
         ],
         icon: '',
         url: '/',
+        category: '',
         subItems: [],
       },
       {
@@ -166,6 +146,7 @@ export const NavItemsContant: NavLinksModel[] = [
         ],
         icon: '',
         url: '/',
+        category: '',
         subItems: [],
       },
     ],
@@ -180,8 +161,46 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.CUSTOMER_USER,
       UserTypeConstant.PROFESSIONAL,
     ],
+    category: '',
     subItems: [],
     icon: 'task alt',
+    url: '/',
+  },
+
+  {
+    label: 'Board',
+    roles: [
+      UserTypeConstant.ADMIN,
+      UserTypeConstant.CUSTOMER,
+      UserTypeConstant.CUSTOMER_USER,
+    ],
+    category: 'directory',
+    subItems: [],
+    icon: 'group',
+    url: '/team-board',
+  },
+  {
+    label: 'Ambulance ##',
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    category: 'directory',
+    subItems: [],
+    icon: 'local_car_wash',
+    url: '/',
+  },
+  {
+    label: 'Living ##',
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    category: 'directory',
+    subItems: [],
+    icon: 'home',
+    url: '/',
+  },
+  {
+    label: 'Job-Portal ##',
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    category: 'directory',
+    subItems: [],
+    icon: 'work',
     url: '/',
   },
 ];

@@ -61,6 +61,11 @@ main {
         .icon-container {
           display: flex;
 
+          .check {
+            color: green;
+            font-size: 26px;
+            margin-top: -2px;
+          }
         }
       }
     }
