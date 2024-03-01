@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,7 +39,7 @@ import { environment } from 'src/environments/environment';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,7 +102,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatDialogModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    CKEditorModule,
   ],
   exports: [OverlaySpinnerComponent],
   providers: [],

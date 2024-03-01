@@ -76,6 +76,9 @@ export class AppComponent implements OnInit {
   public handleLogOut() {
     this.authService.logout();
   }
+  public openDocument() {
+    this.router.navigate(['/document']);
+  }
   public checkIsValid() {
     if (this.isInvitationPage) return true;
     this.userProfile = this.authService.getUserData();
